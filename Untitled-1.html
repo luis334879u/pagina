@@ -1,0 +1,6962 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MundoPhone - Venta de Teléfonos Celulares</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6f7ff 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* Header mejorado */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            padding: 15px 0;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            margin-right: 12px;
+            border-radius: 8px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
+        /* Menú móvil mejorado */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-toggle:hover {
+            background: var(--gray-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            font-size: 0.95rem;
+            padding: 8px 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Menú inferior móvil mejorado */
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.75rem;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 10px;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .mobile-nav-item.active {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .mobile-nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        /* Hero Section mejorada */
+        .hero {
+            padding: 60px 15px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 35px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .cta-button:hover::after {
+            left: 100%;
+        }
+
+        /* Nueva Sección de Tienda */
+        .store-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+            position: relative;
+        }
+
+        .store-banner {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 50px;
+        }
+
+        .store-banner-content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .store-banner-content h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .store-banner-content p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .store-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .store-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .store-feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .store-feature i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .store-feature span {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .store-banner-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .store-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .store-categories {
+            h3 {
+                text-align: center;
+                font-size: 1.8rem;
+                font-weight: 700;
+                margin-bottom: 30px;
+                color: var(--dark);
+            }
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .category-card {
+            background: white;
+            padding: 30px 25px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .category-card h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .category-card p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .category-count {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--light);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Main Container mejorado */
+        .container {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 15px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title p {
+            font-size: 1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* Product Grid mejorado */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .product-image-container {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 160px;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+
+        .product-content {
+            padding: 25px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .product-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .product-stock {
+            font-size: 0.8rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .in-stock {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .low-stock {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .out-of-stock {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        /* Sistema de calificación por estrellas */
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            gap: 8px;
+        }
+
+        .rating-stars {
+            display: flex;
+            font-size: 1.1rem;
+            color: var(--gray-light);
+        }
+
+        .rating-stars .star {
+            cursor: pointer;
+            margin-right: 2px;
+            transition: var(--transition);
+        }
+
+        .rating-stars .star.active {
+            color: #ffc107;
+        }
+
+        .rating-stars .star:hover {
+            transform: scale(1.2);
+        }
+
+        .average-rating {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .review-count {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            gap: 10px;
+        }
+
+        .quantity-selector button {
+            background: var(--gray-light);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .quantity-selector button:hover {
+            background: var(--gray);
+            color: white;
+        }
+
+        .quantity-selector input {
+            width: 60px;
+            text-align: center;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Cart mejorado */
+        .cart {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            padding: 25px;
+            width: 100%;
+            max-width: 450px;
+            max-height: 100vh;
+            overflow-y: auto;
+            z-index: 1100;
+            display: none;
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+        }
+
+        .cart.active {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .cart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-cart:hover {
+            background: var(--gray-light);
+        }
+
+        .cart-items {
+            margin-bottom: 25px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-item-quantity {
+            font-weight: 700;
+            font-size: 1rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .cart-total {
+            font-weight: 800;
+            margin-top: 25px;
+            font-size: 1.3rem;
+            color: var(--primary);
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .payment-form {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 12px;
+            display: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .payment-form.active {
+            display: block;
+        }
+
+        .payment-form h4 {
+            margin: 0 0 18px 0;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: 10px;
+            background: white;
+            color: var(--dark);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        /* Tracking Section mejorada */
+        .tracking-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 35px 25px;
+            margin: 60px auto;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .tracking-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--gray-light);
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tracking-tab {
+            padding: 14px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .tracking-tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .tracking-content {
+            display: none;
+        }
+
+        .tracking-content.active {
+            display: block;
+        }
+
+        .tracking-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .tracking-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .tracking-result {
+            display: none;
+            background: var(--light);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .order-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .order-info-item {
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 0.95rem;
+        }
+
+        .order-info-item strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-timeline {
+            position: relative;
+            margin: 25px 0;
+            padding-left: 30px;
+        }
+
+        .status-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 15px;
+            width: 3px;
+            background: var(--gray-light);
+        }
+
+        .status-step {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .status-step.active .status-icon {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .status-step.completed .status-icon {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-icon {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .status-details {
+            padding: 10px 0 10px 20px;
+        }
+
+        .status-details h4 {
+            margin: 0 0 8px 0;
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .status-details p {
+            margin: 0;
+            color: var(--gray);
+            font-size: 0.85em;
+        }
+
+        .status-time {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.85em;
+            color: var(--gray);
+        }
+
+        .time-estimated, .time-actual {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .time-label {
+            font-weight: 600;
+            margin-bottom: 3px;
+            font-size: 0.8rem;
+        }
+
+        /* Returns Section mejorada */
+        .returns-section {
+            margin-top: 25px;
+        }
+
+        .return-form {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .return-form h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .return-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .return-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .return-code {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .return-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 700;
+        }
+
+        .return-details {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .return-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Return Process Guide mejorado */
+        .return-process {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .return-process h3 {
+            margin-bottom: 20px;
+            color: var(--dark);
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+
+        .step-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+            font-size: 1.05rem;
+        }
+
+        .step-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Return Timeline mejorado */
+        .return-timeline {
+            position: relative;
+            margin: 25px 0;
+            padding-left: 30px;
+        }
+
+        .return-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 15px;
+            width: 3px;
+            background: var(--gray-light);
+        }
+
+        .return-step {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .return-step.active .return-icon {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .return-step.completed .return-icon {
+            background: var(--success);
+            color: white;
+        }
+
+        .return-icon {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .return-details {
+            padding: 10px 0 10px 20px;
+        }
+
+        .return-details h4 {
+            margin: 0 0 8px 0;
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .return-details p {
+            margin: 0;
+            color: var(--gray);
+            font-size: 0.85em;
+        }
+
+        /* Admin Panel mejorado */
+        .admin-panel {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-top: 40px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--gray-light);
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .admin-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .admin-tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-title {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .orders-table th, .orders-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .orders-table th {
+            background: var(--light);
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .orders-table tr:hover {
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        /* Reviews mejorado */
+        .review-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .review-form {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .review-form.expanded {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .review-form h4 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .star {
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffc107;
+            transform: scale(1.2);
+        }
+
+        .review-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: 10px;
+            margin: 12px 0;
+            resize: vertical;
+            min-height: 100px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .review-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .review-author {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .review-rating {
+            color: #ffc107;
+        }
+
+        .review-content {
+            color: var(--dark);
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .review-date {
+            font-size: 0.8em;
+            color: var(--gray);
+            margin-top: 8px;
+        }
+
+        /* Product Reviews mejorado */
+        .product-reviews {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .average-rating {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .review-count {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Modal mejorado */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: var(--shadow-lg);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .modal-title {
+            font-size: 1.4em;
+            color: var(--dark);
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--gray);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            background: var(--gray-light);
+        }
+
+        /* Footer mejorado */
+        footer {
+            text-align: center;
+            padding: 40px 15px;
+            background: var(--dark);
+            color: white;
+            margin-top: 70px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-img {
+            height: 40px;
+            width: auto;
+            border-radius: 6px;
+        }
+
+        .footer-logo span {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+        }
+
+        /* Cart Icon mejorado */
+        .cart-icon {
+            position: fixed;
+            bottom: 80px;
+            right: 25px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.5);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Update Notification mejorado */
+        .update-notification {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .update-notification.show {
+            transform: translateX(0);
+        }
+
+        .update-notification i {
+            font-size: 1.1rem;
+        }
+
+        /* Countdown Timer mejorado */
+        .countdown-timer {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(37, 99, 235, 0.15);
+            padding: 5px 10px;
+            border-radius: 20px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-left: 10px;
+            font-size: 0.85rem;
+        }
+
+        /* Estilos para devoluciones mejorados */
+        .returns-history {
+            margin-top: 25px;
+        }
+        
+        .return-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+        
+        .return-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .return-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .return-code {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .return-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 700;
+        }
+        
+        .status-requested {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+        
+        .status-approved {
+            background: rgba(37, 99, 235, 0.15);
+            color: var(--primary);
+        }
+        
+        .status-completed {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+        
+        .status-rejected {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+        
+        .return-details {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        
+        .return-items {
+            margin-top: 10px;
+        }
+        
+        .return-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .return-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .stage-comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .stage-comparison-table th, .stage-comparison-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .stage-comparison-table th {
+            background: var(--light);
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .stage-comparison-table tr:hover {
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .time-difference {
+            font-weight: 700;
+        }
+        
+        .time-positive {
+            color: var(--success);
+        }
+        
+        .time-negative {
+            color: var(--danger);
+        }
+        
+        .time-neutral {
+            color: var(--gray);
+        }
+
+        /* Historial de pedidos mejorado */
+        .order-history {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .order-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+        
+        .order-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .order-code {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .order-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 700;
+        }
+        
+        .status-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+        
+        .status-processing {
+            background: rgba(37, 99, 235, 0.15);
+            color: var(--primary);
+        }
+        
+        .status-shipped {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent);
+        }
+        
+        .status-delivered {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+        
+        .order-details {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+        
+        .order-items {
+            margin-top: 10px;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .order-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Estilos para mejoras de rendimiento */
+        .performance-optimized {
+            will-change: transform, opacity;
+        }
+        
+        /* Indicador de carga para actualizaciones */
+        .loading-indicator {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+        
+        .loading-indicator.active {
+            display: flex;
+        }
+        
+        /* Mejoras para las actualizaciones de pedidos */
+        .order-status-update {
+            background: rgba(37, 99, 235, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { background: rgba(37, 99, 235, 0.1); }
+            50% { background: rgba(37, 99, 235, 0.2); }
+            100% { background: rgba(37, 99, 235, 0.1); }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* NUEVOS ESTILOS PARA EL PROCESO DE DEVOLUCIÓN MEJORADO */
+        .return-wizard {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .wizard-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .wizard-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gray-light);
+            z-index: 1;
+        }
+        
+        .wizard-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 8px;
+            transition: var(--transition);
+        }
+        
+        .wizard-step.active .step-number {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.2);
+        }
+        
+        .wizard-step.completed .step-number {
+            background: var(--success);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            color: var(--gray);
+        }
+        
+        .wizard-step.active .step-label,
+        .wizard-step.completed .step-label {
+            color: var(--dark);
+        }
+        
+        .wizard-content {
+            display: none;
+        }
+        
+        .wizard-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .wizard-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-light);
+        }
+        
+        .wizard-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .return-summary {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .summary-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .summary-value {
+            color: var(--gray);
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--gray-light);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 2.5rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .upload-hint {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        .uploaded-files {
+            margin-top: 20px;
+        }
+        
+        .uploaded-file {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .file-icon {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .file-name {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+        
+        .file-remove {
+            color: var(--danger);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        .file-remove:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .condition-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .condition-check input {
+            margin-right: 12px;
+        }
+        
+        .condition-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .condition-description {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+        
+        .return-method-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .return-method-option {
+            border: 2px solid var(--gray-light);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .return-method-option:hover {
+            border-color: var(--primary);
+        }
+        
+        .return-method-option.selected {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .method-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .method-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        
+        .method-description {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        .pickup-details {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .pickup-details.active {
+            display: block;
+        }
+        
+        .dropoff-locations {
+            margin-top: 20px;
+        }
+        
+        .location-option {
+            border: 1px solid var(--gray-light);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .location-option:hover {
+            border-color: var(--primary);
+        }
+        
+        .location-option.selected {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .location-name {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .location-address {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        
+        .location-hours {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .confirmation-message {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .confirmation-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        .confirmation-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .confirmation-text {
+            color: var(--gray);
+            margin-bottom: 25px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .email-notification {
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .email-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .email-text {
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+        
+        .timeline-with-dates {
+            margin-top: 25px;
+        }
+        
+        .timeline-date {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            padding-left: 30px;
+        }
+        
+        .return-document {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .document-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .document-title {
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .document-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .document-content {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        /* Estilos para la sección de logística */
+        .logistics-dashboard {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .logistics-tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--gray-light);
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .logistics-tab {
+            padding: 14px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        .logistics-tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .logistics-content {
+            display: none;
+        }
+        
+        .logistics-content.active {
+            display: block;
+        }
+        
+        .logistics-header {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .logistics-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .logistics-header p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        .logistics-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .logistic-stat-card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .logistic-stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+        
+        .stat-info {
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        /* Estilos para tablas de logística */
+        .logistics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .logistics-table th, .logistics-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .logistics-table th {
+            background: var(--light);
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .logistics-table tr:hover {
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+        
+        .status-badge.in-progress {
+            background: rgba(37, 99, 235, 0.15);
+            color: var(--primary);
+        }
+        
+        .status-badge.completed {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+        
+        .btn-sm {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+        }
+        
+        /* Estilos para el proceso de recepción */
+        .reception-process {
+            margin-bottom: 30px;
+        }
+        
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 25px;
+        }
+        
+        .process-flow::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gray-light);
+            z-index: 1;
+        }
+        
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 15px;
+            transition: var(--transition);
+            color: var(--gray);
+        }
+        
+        .process-step.active .step-number {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.2);
+        }
+        
+        .step-content h5 {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        
+        .step-content p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+        
+        /* Estilos para el mapa del almacén */
+        .warehouse-map {
+            margin-bottom: 30px;
+        }
+        
+        .map-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .map-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .map-zone {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .zone-header {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .zone-racks {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .rack {
+            width: 80px;
+            height: 120px;
+            background: white;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .rack:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .rack-label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--dark);
+            z-index: 2;
+        }
+        
+        .rack-usage {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--primary);
+            border-radius: 0 0 8px 8px;
+            transition: var(--transition);
+        }
+        
+        .map-legend {
+            width: 200px;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .map-legend h5 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        .high-usage {
+            background: var(--danger);
+        }
+        
+        .medium-usage {
+            background: var(--warning);
+        }
+        
+        .low-usage {
+            background: var(--success);
+        }
+        
+        /* Estilos para detalles de ubicación */
+        .location-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .location-info, .location-actions {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+        
+        .info-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        /* Estilos para métodos de picking */
+        .picking-methods {
+            margin-bottom: 30px;
+        }
+        
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .method-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .method-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .method-card h5 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .method-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .method-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+        }
+        
+        .method-stats .stat {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* Estilos para control de inventarios */
+        .inventory-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .inventory-summary, .inventory-chart {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .summary-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .summary-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            font-weight: 600;
+        }
+        
+        /* Estilos para alertas de inventario */
+        .inventory-alerts {
+            margin-bottom: 30px;
+        }
+        
+        .alerts-container {
+            margin-top: 15px;
+        }
+        
+        .alert-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            gap: 15px;
+        }
+        
+        .alert-item.critical {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+        }
+        
+        .alert-item.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+        }
+        
+        .alert-item.info {
+            background: rgba(37, 99, 235, 0.1);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .alert-icon {
+            font-size: 1.5rem;
+        }
+        
+        .alert-item.critical .alert-icon {
+            color: var(--danger);
+        }
+        
+        .alert-item.warning .alert-icon {
+            color: var(--warning);
+        }
+        
+        .alert-item.info .alert-icon {
+            color: var(--primary);
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-content h5 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .alert-content p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin: 0;
+        }
+        
+        /* Estilos para movimientos de inventario */
+        .movement-type {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .movement-type.in {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+        
+        .movement-type.out {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+                border-radius: 0 0 15px 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-link {
+                padding: 12px 0;
+                border-bottom: 1px solid var(--gray-light);
+            }
+
+            .nav-link:last-child {
+                border-bottom: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .store-banner {
+                flex-direction: column;
+            }
+
+            .store-banner-content {
+                padding: 30px 25px;
+            }
+
+            .store-features {
+                grid-template-columns: 1fr;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+
+            .cart {
+                width: 100%;
+                right: 0;
+            }
+
+            .tracking-form {
+                flex-direction: column;
+            }
+
+            .order-history {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .process-steps {
+                flex-direction: column;
+            }
+
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-timeline {
+                padding-left: 20px;
+            }
+            
+            .status-icon {
+                left: -25px;
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+            }
+            
+            .wizard-steps {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .wizard-step {
+                flex: 0 0 calc(50% - 15px);
+            }
+            
+            .return-method-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .wizard-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .wizard-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .logistics-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .process-flow {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .process-flow::before {
+                display: none;
+            }
+            
+            .map-container {
+                flex-direction: column;
+            }
+            
+            .map-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .location-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .inventory-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .alert-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.7rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .cart-actions {
+                flex-direction: column;
+            }
+
+            .order-actions {
+                flex-direction: column;
+            }
+
+            .return-actions {
+                flex-direction: column;
+            }
+
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .wizard-step {
+                flex: 0 0 100%;
+            }
+            
+            .upload-area {
+                padding: 20px;
+            }
+            
+            .logistics-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .zone-racks {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Estilos para formularios de calificación de servicio */
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+
+        .service-rating-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="update-notification" id="update-notification">
+        <i class="fas fa-sync-alt"></i>
+        <span>Estado del pedido actualizado</span>
+    </div>
+
+    <!-- Indicador de carga -->
+    <div class="loading-indicator" id="loading-indicator">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Actualizando estado del pedido...</span>
+    </div>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://i.imgur.com/ps9IUMH.png" alt="MundoPhone Logo" class="logo-img">
+                <div>
+                    <div class="logo-text">MundoPhone</div>
+                    <div class="tagline">Tecnología móvil de vanguardia</div>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="#" class="nav-link" onclick="scrollToSection('hero')">Inicio</a>
+                <a href="#tienda" class="nav-link" onclick="scrollToSection('tienda')">Tienda</a>
+                <a href="#productos" class="nav-link" onclick="scrollToSection('productos')">Productos</a>
+                <a href="#logistics" class="nav-link" onclick="scrollToSection('logistics')">Logística</a>
+                <a href="#seguimiento" class="nav-link" onclick="scrollToSection('seguimiento')">Seguimiento</a>
+                <a href="#admin" class="nav-link" onclick="scrollToSection('admin')">Admin</a>
+                <a href="#contacto" class="nav-link" onclick="scrollToSection('contacto')">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Descubre el futuro de la tecnología móvil</h1>
+            <p>Encuentra los últimos modelos de smartphones con las mejores especificaciones y precios competitivos. Calidad garantizada y envío rápido.</p>
+            <a href="#tienda" class="cta-button" onclick="scrollToSection('tienda')">
+                <i class="fas fa-store"></i>
+                Visitar Tienda
+            </a>
+        </div>
+    </section>
+
+    <!-- Nueva Sección de Tienda -->
+    <section class="store-section" id="tienda">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestra Tienda</h2>
+                <p>Explora nuestro catálogo completo de smartphones y accesorios</p>
+            </div>
+            
+            <div class="store-banner">
+                <div class="store-banner-content">
+                    <h3>Tienda MundoPhone</h3>
+                    <p>Los mejores smartphones con garantía y soporte técnico especializado</p>
+                    <div class="store-features">
+                        <div class="store-feature">
+                            <i class="fas fa-shipping-fast"></i>
+                            <span>Envío Gratis</span>
+                        </div>
+                        <div class="store-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Garantía Extendida</span>
+                        </div>
+                        <div class="store-feature">
+                            <i class="fas fa-headset"></i>
+                            <span>Soporte 24/7</span>
+                        </div>
+                        <div class="store-feature">
+                            <i class="fas fa-undo"></i>
+                            <span>30 Días Devolución</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="store-banner-image">
+                    <img src="https://i.imgur.com/mFYGas4.png" alt="Tienda MundoPhone" class="store-image">
+                </div>
+            </div>
+            
+            <div class="store-categories">
+                <h3>Categorías de Productos</h3>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Smartphones</h4>
+                        <p>Últimos modelos y marcas líderes</p>
+                        <span class="category-count">8 productos</span>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-tablet-alt"></i>
+                        </div>
+                        <h4>Tablets</h4>
+                        <p>Tablets para trabajo y entretenimiento</p>
+                        <span class="category-count">Próximamente</span>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <h4>Accesorios</h4>
+                        <p>Fundas, auriculares y más</p>
+                        <span class="category-count">Próximamente</span>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-sim-card"></i>
+                        </div>
+                        <h4>Planes y Servicios</h4>
+                        <p>Planes de datos y seguros</p>
+                        <span class="category-count">Próximamente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container" id="productos">
+        <div class="section-title">
+            <h2>Nuestros Productos</h2>
+            <p>Descubre nuestra selección premium de teléfonos inteligentes con las últimas tecnologías</p>
+        </div>
+        <div class="product-grid" id="products">
+            <!-- Productos se cargarán dinámicamente con JS -->
+        </div>
+    </div>
+
+    <!-- NUEVA SECCIÓN: Operaciones Logísticas -->
+    <div class="container" id="logistics">
+        <div class="section-title">
+            <h2>Operaciones Logísticas</h2>
+            <p>Gestión eficiente de nuestro almacén y procesos de logística</p>
+        </div>
+        
+        <div class="logistics-dashboard">
+            <div class="logistics-tabs">
+                <div class="logistics-tab active" onclick="switchLogisticsTab('reception')">Recepción</div>
+                <div class="logistics-tab" onclick="switchLogisticsTab('location')">Ubicación</div>
+                <div class="logistics-tab" onclick="switchLogisticsTab('picking')">Picking Optimizado</div>
+                <div class="logistics-tab" onclick="switchLogisticsTab('inventory')">Control de Inventarios</div>
+            </div>
+            
+            <!-- Pestaña de Recepción -->
+            <div class="logistics-content active" id="reception-tab">
+                <div class="logistics-header">
+                    <h3>Recepción de Productos</h3>
+                    <p>Gestión de entrada de productos al almacén</p>
+                </div>
+                
+                <div class="logistics-stats">
+                    <div class="logistic-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-truck-loading"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Recep. Pendientes</div>
+                        </div>
+                    </div>
+                    <div class="logistic-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Recep. Completadas</div>
+                        </div>
+                    </div>
+                    <div class="logistic-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">245</div>
+                            <div class="stat-label">Productos Recibidos</div>
+                        </div>
+                    </div>
+                    <div class="logistic-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">2.3 h</div>
+                            <div class="stat-label">Tiempo Promedio</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reception-process">
+                    <h4>Proceso de Recepción</h4>
+                    <div class="process-flow">
+                        <div class="process-step active">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>Notificación de Llegada</h5>
+                                <p>El sistema recibe notificación de llegada de productos</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>Verificación de Documentos</h5>
+                                <p>Se verifica factura, orden de compra y documentos</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>Inspección Física</h5>
+                                <p>Revisión de estado, cantidad y calidad de productos</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>Registro en Sistema</h5>
+                                <p>Ingreso de productos al inventario del almacén</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h5>Ubicación en Almacén</h5>
+                                <p>Colocación de productos en ubicaciones asignadas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reception-table-container">
+                    <h4>Recepciones Pendientes</h4>
+                    <div class="table-responsive">
+                        <table class="logistics-table">
+                            <thead>
+                                <tr>
+                                    <th>ID Recepción</th>
+                                    <th>Proveedor</th>
+                                    <th>Productos</th>
+                                    <th>Fecha Esperada</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>REC-2023-0012</td>
+                                    <td>Samsung Electronics</td>
+                                    <td>Galaxy S24 (50 unidades)</td>
+                                    <td>15/12/2023</td>
+                                    <td><span class="status-badge pending">Pendiente</span></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Procesar</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>REC-2023-0011</td>
+                                    <td>Apple Inc.</td>
+                                    <td>iPhone 15 Pro (30 unidades)</td>
+                                    <td>14/12/2023</td>
+                                    <td><span class="status-badge in-progress">En Proceso</span></td>
+                                    <td>
+                                        <button class="btn btn-secondary btn-sm">Continuar</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>REC-2023-0010</td>
+                                    <td>Xiaomi Corp.</td>
+                                    <td>Xiaomi 14 Pro (40 unidades)</td>
+                                    <td>13/12/2023</td>
+                                    <td><span class="status-badge pending">Pendiente</span></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Procesar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pestaña de Ubicación -->
+            <div class="logistics-content" id="location-tab">
+                <div class="logistics-header">
+                    <h3>Gestión de Ubicaciones</h3>
+                    <p>Organización y optimización del espacio en almacén</p>
+                </div>
+                
+                <div class="warehouse-map">
+                    <h4>Mapa del Almacén</h4>
+                    <div class="map-container">
+                        <div class="map-grid">
+                            <!-- Zona A -->
+                            <div class="map-zone" data-zone="A">
+                                <div class="zone-header">Zona A - Alta Rotación</div>
+                                <div class="zone-racks">
+                                    <div class="rack" data-rack="A1" data-usage="85">
+                                        <div class="rack-label">A1</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                    <div class="rack" data-rack="A2" data-usage="92">
+                                        <div class="rack-label">A2</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                    <div class="rack" data-rack="A3" data-usage="78">
+                                        <div class="rack-label">A3</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Zona B -->
+                            <div class="map-zone" data-zone="B">
+                                <div class="zone-header">Zona B - Media Rotación</div>
+                                <div class="zone-racks">
+                                    <div class="rack" data-rack="B1" data-usage="65">
+                                        <div class="rack-label">B1</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                    <div class="rack" data-rack="B2" data-usage="45">
+                                        <div class="rack-label">B2</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                    <div class="rack" data-rack="B3" data-usage="60">
+                                        <div class="rack-label">B3</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Zona C -->
+                            <div class="map-zone" data-zone="C">
+                                <div class="zone-header">Zona C - Baja Rotación</div>
+                                <div class="zone-racks">
+                                    <div class="rack" data-rack="C1" data-usage="30">
+                                        <div class="rack-label">C1</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                    <div class="rack" data-rack="C2" data-usage="25">
+                                        <div class="rack-label">C2</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                    <div class="rack" data-rack="C3" data-usage="40">
+                                        <div class="rack-label">C3</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Zona D -->
+                            <div class="map-zone" data-zone="D">
+                                <div class="zone-header">Zona D - Accesorios</div>
+                                <div class="zone-racks">
+                                    <div class="rack" data-rack="D1" data-usage="70">
+                                        <div class="rack-label">D1</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                    <div class="rack" data-rack="D2" data-usage="55">
+                                        <div class="rack-label">D2</div>
+                                        <div class="rack-usage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="map-legend">
+                            <h5>Leyenda de Ocupación</h5>
+                            <div class="legend-item">
+                                <div class="legend-color high-usage"></div>
+                                <span>Alta (70-100%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color medium-usage"></div>
+                                <span>Media (40-69%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color low-usage"></div>
+                                <span>Baja (0-39%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="location-details">
+                    <div class="location-info">
+                        <h4>Información de Ubicaciones</h4>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Total de Ubicaciones</div>
+                                <div class="info-value">48</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Ubicaciones Ocupadas</div>
+                                <div class="info-value">35</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Ubicaciones Disponibles</div>
+                                <div class="info-value">13</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Ocupación Promedio</div>
+                                <div class="info-value">68%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="location-actions">
+                        <h4>Gestión de Ubicaciones</h4>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-search"></i> Buscar Ubicación
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-sync-alt"></i> Reorganizar
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-print"></i> Imprimir Mapa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pestaña de Picking Optimizado -->
+            <div class="logistics-content" id="picking-tab">
+                <div class="logistics-header">
+                    <h3>Picking Optimizado</h3>
+                    <p>Sistema inteligente de preparación de pedidos</p>
+                </div>
+                
+                <div class="picking-stats">
+                    <div class="logistic-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Picking Activos</div>
+                        </div>
+                    </div>
+                    <div class="logistic-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">Picking Completados</div>
+                        </div>
+                    </div>
+                    <div class="logistic-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">3.2 min</div>
+                            <div class="stat-label">Tiempo Promedio</div>
+                        </div>
+                    </div>
+                    <div class="logistic-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">98.5%</div>
+                            <div class="stat-label">Precisión</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="picking-methods">
+                    <h4>Métodos de Picking</h4>
+                    <div class="methods-grid">
+                        <div class="method-card">
+                            <div class="method-icon">
+                                <i class="fas fa-people-carry"></i>
+                            </div>
+                            <h5>Picking por Pedido</h5>
+                            <p>Preparación de un pedido completo por un operario</p>
+                            <div class="method-stats">
+                                <span class="stat">Tiempo: 8.5 min</span>
+                                <span class="stat">Precisión: 99.2%</span>
+                            </div>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-icon">
+                                <i class="fas fa-conveyor-belt"></i>
+                            </div>
+                            <h5>Picking por Lote</h5>
+                            <p>Preparación de múltiples pedidos simultáneamente</p>
+                            <div class="method-stats">
+                                <span class="stat">Tiempo: 5.2 min</span>
+                                <span class="stat">Precisión: 97.8%</span>
+                            </div>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-icon">
+                                <i class="fas fa-wave-square"></i>
+                            </div>
+                            <h5>Picking por Zona</h5>
+                            <p>Operarios especializados por áreas del almacén</p>
+                            <div class="method-stats">
+                                <span class="stat">Tiempo: 4.1 min</span>
+                                <span class="stat">Precisión: 98.5%</span>
+                            </div>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h5>Picking Automatizado</h5>
+                            <p>Sistema automatizado con asistencia de robots</p>
+                            <div class="method-stats">
+                                <span class="stat">Tiempo: 2.3 min</span>
+                                <span class="stat">Precisión: 99.8%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="picking-orders">
+                    <h4>Órdenes de Picking Activas</h4>
+                    <div class="table-responsive">
+                        <table class="logistics-table">
+                            <thead>
+                                <tr>
+                                    <th>Orden Picking</th>
+                                    <th>Pedido</th>
+                                    <th>Productos</th>
+                                    <th>Método</th>
+                                    <th>Operario</th>
+                                    <th>Tiempo Estimado</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PICK-2023-0456</td>
+                                    <td>MP100000045</td>
+                                    <td>3 productos</td>
+                                    <td>Por Zona</td>
+                                    <td>Carlos R.</td>
+                                    <td>4 min</td>
+                                    <td><span class="status-badge in-progress">En Proceso</span></td>
+                                </tr>
+                                <tr>
+                                    <td>PICK-2023-0457</td>
+                                    <td>MP100000046</td>
+                                    <td>2 productos</td>
+                                    <td>Por Pedido</td>
+                                    <td>Ana M.</td>
+                                    <td>7 min</td>
+                                    <td><span class="status-badge pending">Pendiente</span></td>
+                                </tr>
+                                <tr>
+                                    <td>PICK-2023-0458</td>
+                                    <td>MP100000047</td>
+                                    <td>5 productos</td>
+                                    <td>Por Lote</td>
+                                    <td>Luis G.</td>
+                                    <td>6 min</td>
+                                    <td><span class="status-badge in-progress">En Proceso</span></td>
+                                </tr>
+                                <tr>
+                                    <td>PICK-2023-0459</td>
+                                    <td>MP100000048</td>
+                                    <td>1 producto</td>
+                                    <td>Automatizado</td>
+                                    <td>Sistema</td>
+                                    <td>2 min</td>
+                                    <td><span class="status-badge completed">Completado</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pestaña de Control de Inventarios -->
+            <div class="logistics-content" id="inventory-tab">
+                <div class="logistics-header">
+                    <h3>Control de Inventarios</h3>
+                    <p>Gestión y seguimiento de existencias en tiempo real</p>
+                </div>
+                
+                <div class="inventory-overview">
+                    <div class="inventory-summary">
+                        <h4>Resumen de Inventario</h4>
+                        <div class="summary-cards">
+                            <div class="summary-card">
+                                <div class="summary-value">1,245</div>
+                                <div class="summary-label">Total Productos</div>
+                            </div>
+                            <div class="summary-card">
+                                <div class="summary-value">$2.8M</div>
+                                <div class="summary-label">Valor Total</div>
+                            </div>
+                            <div class="summary-card">
+                                <div class="summary-value">42</div>
+                                <div class="summary-label">Stock Bajo</div>
+                            </div>
+                            <div class="summary-card">
+                                <div class="summary-value">8</div>
+                                <div class="summary-label">Stock Crítico</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="inventory-chart">
+                        <h4>Rotación de Inventario</h4>
+                        <canvas id="inventory-turnover-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="inventory-alerts">
+                    <h4>Alertas de Inventario</h4>
+                    <div class="alerts-container">
+                        <div class="alert-item critical">
+                            <div class="alert-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h5>Stock Crítico - iPhone 15 Pro</h5>
+                                <p>Solo quedan 3 unidades en inventario. Realizar pedido urgente.</p>
+                            </div>
+                            <div class="alert-actions">
+                                <button class="btn btn-danger btn-sm">Acción</button>
+                            </div>
+                        </div>
+                        <div class="alert-item warning">
+                            <div class="alert-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h5>Stock Bajo - Samsung Galaxy S24</h5>
+                                <p>Quedan 8 unidades. Considerar reabastecimiento.</p>
+                            </div>
+                            <div class="alert-actions">
+                                <button class="btn btn-warning btn-sm">Revisar</button>
+                            </div>
+                        </div>
+                        <div class="alert-item info">
+                            <div class="alert-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h5>Inventario Físico Programado</h5>
+                                <p>Conteo físico programado para el 20/12/2023.</p>
+                            </div>
+                            <div class="alert-actions">
+                                <button class="btn btn-secondary btn-sm">Programar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="inventory-movements">
+                    <h4>Movimientos Recientes</h4>
+                    <div class="table-responsive">
+                        <table class="logistics-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha/Hora</th>
+                                    <th>Producto</th>
+                                    <th>Tipo Movimiento</th>
+                                    <th>Cantidad</th>
+                                    <th>Ubicación</th>
+                                    <th>Usuario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>15/12/2023 10:23</td>
+                                    <td>Samsung Galaxy S24 Ultra</td>
+                                    <td><span class="movement-type out">Salida</span></td>
+                                    <td>-2</td>
+                                    <td>A1-02</td>
+                                    <td>Carlos R.</td>
+                                </tr>
+                                <tr>
+                                    <td>15/12/2023 09:45</td>
+                                    <td>iPhone 15 Pro</td>
+                                    <td><span class="movement-type out">Salida</span></td>
+                                    <td>-1</td>
+                                    <td>A2-01</td>
+                                    <td>Ana M.</td>
+                                </tr>
+                                <tr>
+                                    <td>15/12/2023 08:30</td>
+                                    <td>Xiaomi 14 Pro</td>
+                                    <td><span class="movement-type in">Entrada</span></td>
+                                    <td>+20</td>
+                                    <td>B1-03</td>
+                                    <td>Sistema</td>
+                                </tr>
+                                <tr>
+                                    <td>14/12/2023 16:15</td>
+                                    <td>Google Pixel 8</td>
+                                    <td><span class="movement-type out">Salida</span></td>
+                                    <td>-3</td>
+                                    <td>A3-02</td>
+                                    <td>Luis G.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tracking-section" id="seguimiento">
+        <div class="section-title">
+            <h2>Seguimiento de Pedidos</h2>
+            <p>Rastrea tu pedido en tiempo real y consulta tu historial de compras</p>
+        </div>
+        
+        <div class="tracking-tabs">
+            <div class="tracking-tab active" onclick="switchTab('track')">Rastrear Pedido</div>
+            <div class="tracking-tab" onclick="switchTab('history')">Historial de Pedidos</div>
+            <div class="tracking-tab" onclick="switchTab('returns')">Devoluciones</div>
+        </div>
+        
+        <div class="tracking-content active" id="track-tab">
+            <div class="tracking-form">
+                <input type="text" id="tracking-code" placeholder="Ingresa tu código de seguimiento">
+                <button class="btn btn-primary" onclick="trackOrder()">Rastrear Pedido</button>
+            </div>
+            
+            <div class="tracking-result" id="tracking-result">
+                <div class="order-info">
+                    <div class="order-info-item">
+                        <strong>Código de Pedido</strong>
+                        <span id="order-code">-</span>
+                    </div>
+                    <div class="order-info-item">
+                        <strong>Fecha de Pedido</strong>
+                        <span id="order-date">-</span>
+                    </div>
+                    <div class="order-info-item">
+                        <strong>Cliente</strong>
+                        <span id="order-customer">-</span>
+                    </div>
+                    <div class="order-info-item">
+                        <strong>Total</strong>
+                        <span id="order-total">-</span>
+                    </div>
+                    <div class="order-info-item">
+                        <strong>Tiempo Estimado</strong>
+                        <span id="order-estimated">-</span>
+                    </div>
+                    <div class="order-info-item">
+                        <strong>Progreso</strong>
+                        <span id="order-progress">-</span>
+                    </div>
+                </div>
+                
+                <h4>Estado del Envío</h4>
+                <div class="status-timeline" id="status-timeline">
+                    <!-- Timeline se llenará dinámicamente -->
+                </div>
+                
+                <div class="review-section" id="order-review-section" style="display: none;">
+                    <h4>Califica tu Pedido</h4>
+                    <div class="review-form">
+                        <h4>¿Cómo calificarías tu experiencia?</h4>
+                        <div class="star-rating" id="order-rating-stars">
+                            <span class="star" data-rating="1">☆</span>
+                            <span class="star" data-rating="2">☆</span>
+                            <span class="star" data-rating="3">☆</span>
+                            <span class="star" data-rating="4">☆</span>
+                            <span class="star" data-rating="5">☆</span>
+                        </div>
+                        <input type="hidden" id="order-rating-value" value="0">
+                        <textarea id="order-review-text" placeholder="Comparte tu experiencia con este pedido..."></textarea>
+                        <button class="btn btn-primary" onclick="submitOrderReview()">Enviar Reseña</button>
+                    </div>
+                    
+                    <div class="review-list" id="order-reviews-list">
+                        <!-- Reseñas se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tracking-content" id="history-tab">
+            <div class="order-history" id="order-history">
+                <!-- Historial de pedidos se cargará dinámicamente -->
+            </div>
+        </div>
+        
+        <div class="tracking-content" id="returns-tab">
+            <div class="return-form">
+                <h3>Solicitar Devolución</h3>
+                <div class="form-group">
+                    <label for="return-order">Selecciona el pedido</label>
+                    <select id="return-order" class="form-control">
+                        <option value="">-- Selecciona un pedido --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="return-reason">Motivo de la devolución</label>
+                    <select id="return-reason" class="form-control">
+                        <option value="">-- Selecciona un motivo --</option>
+                        <option value="producto_defectuoso">Producto defectuoso</option>
+                        <option value="producto_incorrecto">Producto incorrecto</option>
+                        <option value="no_cumple_esperanzas">No cumple con las expectativas</option>
+                        <option value="cambio_modelo">Cambio de modelo</option>
+                        <option value="arrepentimiento">Arrepentimiento de compra</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="return-comments">Comentarios adicionales</label>
+                    <textarea id="return-comments" class="form-control" rows="3" placeholder="Describe el motivo de tu devolución..."></textarea>
+                </div>
+                <button class="btn btn-primary" onclick="submitReturnRequest()">Solicitar Devolución</button>
+            </div>
+            
+            <div class="returns-history">
+                <h3>Historial de Devoluciones</h3>
+                <div id="returns-list">
+                    <!-- Lista de devoluciones se cargará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="admin">
+        <div class="section-title">
+            <h2>Panel de Administración</h2>
+            <p>Gestión y análisis de pedidos, inventario y logística</p>
+        </div>
+        
+        <div class="admin-panel">
+            <div class="admin-tabs">
+                <div class="admin-tab active" onclick="switchAdminTab('stats')">Estadísticas</div>
+                <div class="admin-tab" onclick="switchAdminTab('orders')">Pedidos</div>
+                <div class="admin-tab" onclick="switchAdminTab('returns')">Devoluciones</div>
+                <div class="admin-tab" onclick="switchAdminTab('stage-times')">Tiempos por Etapa</div>
+            </div>
+            
+            <div class="admin-content active" id="stats-tab">
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-orders">0</div>
+                        <div class="stat-label">Total Pedidos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="delivered-orders">0</div>
+                        <div class="stat-label">Pedidos Entregados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="pending-orders">0</div>
+                        <div class="stat-label">Pedidos Pendientes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="return-requests">0</div>
+                        <div class="stat-label">Solicitudes Devolución</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avg-delivery-time">0</div>
+                        <div class="stat-label">Tiempo Promedio (h)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="on-time-rate">0%</div>
+                        <div class="stat-label">Entregas a Tiempo</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Distribución de Estados de Pedidos</div>
+                    <canvas id="orders-chart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Pedidos por Región</div>
+                    <canvas id="region-chart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Eficiencia de Tiempos de Entrega</div>
+                    <canvas id="efficiency-chart"></canvas>
+                </div>
+            </div>
+            
+            <div class="admin-content" id="orders-tab">
+                <h3>Gestión de Pedidos</h3>
+                <div class="table-responsive">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Tiempo Estimado</th>
+                                <th>Progreso</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-orders-table">
+                            <!-- Tabla de pedidos se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="admin-content" id="returns-tab">
+                <h3>Gestión de Devoluciones</h3>
+                <div class="table-responsive">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Código Devolución</th>
+                                <th>Pedido</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Motivo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-returns-table">
+                            <!-- Tabla de devoluciones se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="admin-content" id="stage-times-tab">
+                <h3>Análisis de Tiempos por Etapa</h3>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Tiempos Promedio por Etapa</div>
+                    <canvas id="stage-times-chart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Comparación de Eficiencia por Etapa</div>
+                    <canvas id="stage-comparison-chart"></canvas>
+                </div>
+                
+                <h4>Comparación Detallada</h4>
+                <div class="table-responsive">
+                    <table class="stage-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Etapa</th>
+                                <th>Tiempo Estimado (h)</th>
+                                <th>Tiempo Real (h)</th>
+                                <th>Diferencia</th>
+                                <th>Eficiencia</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stage-comparison-table-body">
+                            <!-- Tabla de comparación se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart" id="cart">
+        <div class="cart-header">
+            <h2 class="cart-title">Tu Carrito</h2>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="cart-items" id="cart-items">
+            <!-- Los productos del carrito se añadirán aquí -->
+        </div>
+        
+        <div class="cart-total">
+            Total: $<span id="total">0</span> MXN
+        </div>
+        
+        <div class="cart-actions">
+            <button class="btn btn-primary" onclick="showPaymentForm()">Proceder al Pago</button>
+            <button class="btn btn-secondary" onclick="clearCart()">Vaciar Carrito</button>
+        </div>
+        
+        <div class="payment-form" id="payment-form">
+            <h4>Información de Pago</h4>
+            <div class="form-group">
+                <label for="card-number">Número de Tarjeta</label>
+                <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456">
+            </div>
+            <div class="form-group">
+                <label for="expiry">Fecha de Expiración</label>
+                <input type="text" id="expiry" class="form-control" placeholder="MM/AA">
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" class="form-control" placeholder="123">
+            </div>
+            <div class="form-group">
+                <label for="name">Nombre en la Tarjeta</label>
+                <input type="text" id="name" class="form-control" placeholder="Juan Pérez">
+            </div>
+            <div class="cart-actions">
+                <button class="btn btn-primary" onclick="processPayment()">Pagar Ahora</button>
+                <button class="btn btn-secondary" onclick="hidePaymentForm()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <div class="cart-badge" id="cart-badge">0</div>
+    </div>
+
+    <!-- Modal para reseñas de productos -->
+    <div class="modal" id="product-review-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-product-name">Reseñas</h3>
+                <button class="close-modal" onclick="closeProductReviewModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="review-form">
+                <h4>¿Cómo calificarías este producto?</h4>
+                <div class="star-rating" id="product-rating-stars">
+                    <span class="star" data-rating="1">☆</span>
+                    <span class="star" data-rating="2">☆</span>
+                    <span class="star" data-rating="3">☆</span>
+                    <span class="star" data-rating="4">☆</span>
+                    <span class="star" data-rating="5">☆</span>
+                </div>
+                <input type="hidden" id="product-rating-value" value="0">
+                <textarea id="product-review-text" placeholder="Comparte tu experiencia con este producto..."></textarea>
+                <button class="btn btn-primary" onclick="submitProductReview()">Enviar Reseña</button>
+            </div>
+            
+            <div class="product-reviews">
+                <h4>Reseñas de Clientes</h4>
+                <div class="review-list" id="product-reviews-list">
+                    <!-- Reseñas se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú inferior móvil -->
+    <div class="mobile-bottom-nav">
+        <a href="#" class="mobile-nav-item active" onclick="scrollToSection('hero')">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="#tienda" class="mobile-nav-item" onclick="scrollToSection('tienda')">
+            <i class="fas fa-store"></i>
+            <span>Tienda</span>
+        </a>
+        <a href="#productos" class="mobile-nav-item" onclick="scrollToSection('productos')">
+            <i class="fas fa-mobile-alt"></i>
+            <span>Productos</span>
+        </a>
+        <a href="#logistics" class="mobile-nav-item" onclick="scrollToSection('logistics')">
+            <i class="fas fa-warehouse"></i>
+            <span>Logística</span>
+        </a>
+        <a href="#seguimiento" class="mobile-nav-item" onclick="scrollToSection('seguimiento')">
+            <i class="fas fa-shipping-fast"></i>
+            <span>Seguimiento</span>
+        </a>
+        <a href="#admin" class="mobile-nav-item" onclick="scrollToSection('admin')">
+            <i class="fas fa-chart-line"></i>
+            <span>Admin</span>
+        </a>
+    </div>
+
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="https://i.imgur.com/ps9IUMH.png" alt="MundoPhone Logo" class="footer-logo-img">
+                <span>MundoPhone</span>
+            </div>
+            <p>Tu tienda tecnológica para los mejores teléfonos celulares</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="scrollToSection('hero')">Inicio</a>
+                <a href="#tienda" class="footer-link" onclick="scrollToSection('tienda')">Tienda</a>
+                <a href="#productos" class="footer-link" onclick="scrollToSection('productos')">Productos</a>
+                <a href="#logistics" class="footer-link" onclick="scrollToSection('logistics')">Logística</a>
+                <a href="#seguimiento" class="footer-link" onclick="scrollToSection('seguimiento')">Seguimiento</a>
+                <a href="#admin" class="footer-link" onclick="scrollToSection('admin')">Admin</a>
+                <a href="#" class="footer-link">Términos y Condiciones</a>
+            </div>
+            <div class="service-rating-buttons">
+                <button class="btn btn-secondary" onclick="showOnlineServiceRatingForm('MP100000001')">
+                    <i class="fas fa-laptop"></i> Calificar Servicio Online
+                </button>
+                <button class="btn btn-secondary" onclick="showInStoreServiceRatingForm()">
+                    <i class="fas fa-store"></i> Calificar Tienda Física
+                </button>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MundoPhone. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Variables globales para mejorar el rendimiento
+        let orderUpdateInterval;
+        let currentOrderTracking = null;
+        let reviewFormsInitialized = false;
+
+        // Variables para el proceso de devolución
+        let currentWizardStep = 1;
+        let selectedReturnMethod = null;
+        let selectedLocation = null;
+        let uploadedFiles = [];
+        let returnItems = [];
+
+        // Datos de productos con calificaciones
+        const products = [
+            { 
+                id: 1, 
+                model: "Samsung Galaxy S24 Ultra", 
+                desc: "Pantalla AMOLED 6.8” QHD+, procesador Snapdragon 8 Gen 3, cámara 200 MP, batería 5000 mAh, compatibilidad S-Pen, Android 14.", 
+                price: 26999, 
+                stock: 10,
+                image: "https://i.imgur.com/kEiZVBq.png",
+                backupImage: "https://via.placeholder.com/300x300?text=Samsung+Galaxy+S24+Ultra",
+                rating: 4.8,
+                reviews: 124
+            },
+            { 
+                id: 2, 
+                model: "iPhone 15 Pro", 
+                desc: "Pantalla Super Retina XDR 6.1”, chip A17 Pro, cuerpo de titanio, cámara 48 MP, iOS 17, carga rápida.", 
+                price: 27499, 
+                stock: 10,
+                image: "https://i.imgur.com/SnecppD.png",
+                backupImage: "https://via.placeholder.com/300x300?text=iPhone+15+Pro",
+                rating: 4.9,
+                reviews: 187
+            },
+            { 
+                id: 3, 
+                model: "Xiaomi 14 Pro", 
+                desc: "Pantalla AMOLED 6.73”, Snapdragon 8 Gen 3, cámara Leica 50 MP, carga ultra rápida 120W, MIUI 15.", 
+                price: 19999, 
+                stock: 10,
+                image: "https://i.imgur.com/1FZswKI.png",
+                backupImage: "https://via.placeholder.com/300x300?text=Xiaomi+14+Pro",
+                rating: 4.6,
+                reviews: 89
+            },
+            { 
+                id: 4, 
+                model: "Motorola Edge 50 Ultra", 
+                desc: "Procesador Snapdragon 8s Gen 3, cámara triple 50 MP, pantalla 6.7” OLED 144Hz, batería 4500 mAh con carga 125W.", 
+                price: 16499, 
+                stock: 10,
+                image: "https://i.imgur.com/1VDCLbH.png",
+                backupImage: "https://via.placeholder.com/300x300?text=Motorola+Edge+50+Ultra",
+                rating: 4.4,
+                reviews: 67
+            },
+            { 
+                id: 5, 
+                model: "Huawei Pura 70 Pro", 
+                desc: "Pantalla OLED 6.8”, cámara 50 MP con zoom periscópico, batería 5050 mAh, EMUI 14, sin servicios Google.", 
+                price: 22999, 
+                stock: 10,
+                image: "https://i.imgur.com/FtIEzds.png",
+                backupImage: "https://via.placeholder.com/300x300?text=Huawei+Pura+70+Pro",
+                rating: 4.2,
+                reviews: 42
+            },
+            { 
+                id: 6, 
+                model: "Google Pixel 8", 
+                desc: "Pantalla OLED 6.2”, chip Google Tensor G3, cámara 50 MP con IA fotográfica, Android 14 puro, resistencia IP68.", 
+                price: 18499, 
+                stock: 10,
+                image: "https://i.imgur.com/fEqnKFB.png",
+                backupImage: "https://via.placeholder.com/300x300?text=Google+Pixel+8",
+                rating: 4.7,
+                reviews: 156
+            },
+            { 
+                id: 7, 
+                model: "OnePlus 12", 
+                desc: "Pantalla AMOLED 6.82”, Snapdragon 8 Gen 3, cámara Hasselblad 50 MP, batería 5400 mAh, carga 100W, Android 14.", 
+                price: 20499, 
+                stock: 10,
+                image: "https://i.imgur.com/iaTGlJK.png",
+                backupImage: "https://via.placeholder.com/300x300?text=OnePlus+12",
+                rating: 4.5,
+                reviews: 98
+            },
+            { 
+                id: 8, 
+                model: "Realme GT 6 Pro", 
+                desc: "Procesador Snapdragon 8 Gen 2, pantalla AMOLED 6.7”, cámara triple 50 MP, carga rápida 120W, excelente relación precio-rendimiento.", 
+                price: 13999, 
+                stock: 10,
+                image: "https://i.imgur.com/Q0fkn80.png",
+                backupImage: "https://via.placeholder.com/300x300?text=Realme+GT+6+Pro",
+                rating: 4.3,
+                reviews: 73
+            }
+        ];
+
+        let cart = [];
+        const productsContainer = document.getElementById('products');
+        const cartItems = document.getElementById('cart-items');
+        const totalElement = document.getElementById('total');
+        const paymentForm = document.getElementById('payment-form');
+        const cartBadge = document.getElementById('cart-badge');
+        const updateNotification = document.getElementById('update-notification');
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        // Almacenamiento para pedidos y reseñas
+        let orders = JSON.parse(localStorage.getItem('mundoPhoneOrders')) || [];
+        let productReviews = JSON.parse(localStorage.getItem('mundoPhoneProductReviews')) || {};
+        let orderReviews = JSON.parse(localStorage.getItem('mundoPhoneOrderReviews')) || {};
+        let returns = JSON.parse(localStorage.getItem('mundoPhoneReturns')) || [];
+
+        // Variables para el seguimiento de actualizaciones
+        let currentlyTrackedOrder = null;
+        let lastUpdateTime = null;
+
+        // Tiempos estimados de entrega por región (en HORAS)
+        const deliveryEstimates = {
+            "Centro": { min: 24, max: 48 },    // 1-2 días
+            "Norte": { min: 48, max: 72 },     // 2-3 días
+            "Sur": { min: 72, max: 96 },       // 3-4 días
+            "Este": { min: 48, max: 72 },      // 2-3 días
+            "Oeste": { min: 48, max: 72 }      // 2-3 días
+        };
+
+        // Tiempos estimados por etapa (en HORAS)
+        const stageEstimates = {
+            "processing": { min: 2, max: 6 },   // Procesamiento (2-6 horas)
+            "shipping": { min: 4, max: 8 },     // Envío (4-8 horas)
+            "transit": { min: 12, max: 48 },    // Tránsito (12-48 horas)
+            "delivery": { min: 2, max: 6 }      // Entrega final (2-6 horas)
+        };
+
+        // Inicializar reseñas de productos si no existen
+        products.forEach(product => {
+            if (!productReviews[product.id]) {
+                productReviews[product.id] = [];
+            }
+        });
+
+        // NUEVAS FUNCIONES PARA CALIFICAR SERVICIOS
+
+        // Función para calificar el servicio de compra en línea
+        function rateOnlineService(orderCode, rating, comments = '') {
+            // Obtener o inicializar el almacenamiento de calificaciones de servicio en línea
+            let onlineServiceRatings = JSON.parse(localStorage.getItem('mundoPhoneOnlineServiceRatings')) || {};
+            
+            // Crear la calificación
+            const serviceRating = {
+                id: Date.now(),
+                orderCode: orderCode,
+                rating: rating,
+                comments: comments,
+                serviceType: 'online',
+                date: new Date().toISOString(),
+                timestamp: new Date().getTime()
+            };
+            
+            // Guardar la calificación
+            if (!onlineServiceRatings[orderCode]) {
+                onlineServiceRatings[orderCode] = [];
+            }
+            onlineServiceRatings[orderCode].push(serviceRating);
+            
+            // Actualizar localStorage
+            localStorage.setItem('mundoPhoneOnlineServiceRatings', JSON.stringify(onlineServiceRatings));
+            
+            // Actualizar estadísticas si es necesario
+            updateServiceRatingStats();
+            
+            return serviceRating;
+        }
+
+        // Función para calificar el trato en tienda física
+        function rateInStoreService(storeCode, rating, staffName = '', comments = '') {
+            // Obtener o inicializar el almacenamiento de calificaciones de tienda física
+            let inStoreServiceRatings = JSON.parse(localStorage.getItem('mundoPhoneInStoreServiceRatings')) || {};
+            
+            // Crear la calificación
+            const serviceRating = {
+                id: Date.now(),
+                storeCode: storeCode,
+                rating: rating,
+                staffName: staffName,
+                comments: comments,
+                serviceType: 'in_store',
+                date: new Date().toISOString(),
+                timestamp: new Date().getTime()
+            };
+            
+            // Guardar la calificación
+            if (!inStoreServiceRatings[storeCode]) {
+                inStoreServiceRatings[storeCode] = [];
+            }
+            inStoreServiceRatings[storeCode].push(serviceRating);
+            
+            // Actualizar localStorage
+            localStorage.setItem('mundoPhoneInStoreServiceRatings', JSON.stringify(inStoreServiceRatings));
+            
+            // Actualizar estadísticas si es necesario
+            updateServiceRatingStats();
+            
+            return serviceRating;
+        }
+
+        // Función para mostrar el formulario de calificación de servicio en línea
+        function showOnlineServiceRatingForm(orderCode) {
+            // Crear modal para calificación de servicio en línea
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Calificar Servicio de Compra en Línea</h3>
+                        <button class="close-modal" onclick="this.closest('.modal').remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="review-form">
+                        <p>Pedido: <strong>${orderCode}</strong></p>
+                        <div class="form-group">
+                            <label>¿Cómo calificarías nuestro servicio de compra en línea?</label>
+                            <div class="star-rating" id="online-service-rating-stars">
+                                <span class="star" data-rating="1">☆</span>
+                                <span class="star" data-rating="2">☆</span>
+                                <span class="star" data-rating="3">☆</span>
+                                <span class="star" data-rating="4">☆</span>
+                                <span class="star" data-rating="5">☆</span>
+                            </div>
+                            <input type="hidden" id="online-service-rating-value" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="online-service-comments">Comentarios adicionales (opcional)</label>
+                            <textarea id="online-service-comments" class="form-control" rows="3" placeholder="Comparte tu experiencia con nuestro servicio en línea..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="submitOnlineServiceRating('${orderCode}')">Enviar Calificación</button>
+                            <button class="btn btn-secondary" onclick="this.closest('.modal').remove()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Inicializar estrellas interactivas
+            initializeRatingStars('online-service-rating-stars', 'online-service-rating-value');
+        }
+
+        // Función para mostrar el formulario de calificación de tienda física
+        function showInStoreServiceRatingForm(storeCode = 'ST001') {
+            // Crear modal para calificación de tienda física
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Calificar Atención en Tienda Física</h3>
+                        <button class="close-modal" onclick="this.closest('.modal').remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="review-form">
+                        <p>Tienda: <strong>${getStoreName(storeCode)}</strong></p>
+                        <div class="form-group">
+                            <label for="in-store-staff-name">Nombre del empleado (opcional)</label>
+                            <input type="text" id="in-store-staff-name" class="form-control" placeholder="Nombre del empleado que te atendió">
+                        </div>
+                        <div class="form-group">
+                            <label>¿Cómo calificarías la atención recibida en nuestra tienda?</label>
+                            <div class="star-rating" id="in-store-service-rating-stars">
+                                <span class="star" data-rating="1">☆</span>
+                                <span class="star" data-rating="2">☆</span>
+                                <span class="star" data-rating="3">☆</span>
+                                <span class="star" data-rating="4">☆</span>
+                                <span class="star" data-rating="5">☆</span>
+                            </div>
+                            <input type="hidden" id="in-store-service-rating-value" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="in-store-service-comments">Comentarios adicionales (opcional)</label>
+                            <textarea id="in-store-service-comments" class="form-control" rows="3" placeholder="Comparte tu experiencia en nuestra tienda física..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="submitInStoreServiceRating('${storeCode}')">Enviar Calificación</button>
+                            <button class="btn btn-secondary" onclick="this.closest('.modal').remove()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Inicializar estrellas interactivas
+            initializeRatingStars('in-store-service-rating-stars', 'in-store-service-rating-value');
+        }
+
+        // Función para enviar calificación de servicio en línea
+        function submitOnlineServiceRating(orderCode) {
+            const rating = parseInt(document.getElementById('online-service-rating-value').value);
+            const comments = document.getElementById('online-service-comments').value.trim();
+            
+            if (rating === 0) {
+                alert('Por favor, selecciona una calificación.');
+                return;
+            }
+            
+            // Guardar la calificación
+            const serviceRating = rateOnlineService(orderCode, rating, comments);
+            
+            // Cerrar el modal
+            document.querySelector('.modal').remove();
+            
+            // Mostrar confirmación
+            showNotification(`¡Gracias! Tu calificación del servicio en línea ha sido registrada.`);
+            
+            // Actualizar vista si es necesario
+            updateServiceRatingDisplay(orderCode);
+        }
+
+        // Función para enviar calificación de tienda física
+        function submitInStoreServiceRating(storeCode) {
+            const rating = parseInt(document.getElementById('in-store-service-rating-value').value);
+            const staffName = document.getElementById('in-store-staff-name').value.trim();
+            const comments = document.getElementById('in-store-service-comments').value.trim();
+            
+            if (rating === 0) {
+                alert('Por favor, selecciona una calificación.');
+                return;
+            }
+            
+            // Guardar la calificación
+            const serviceRating = rateInStoreService(storeCode, rating, staffName, comments);
+            
+            // Cerrar el modal
+            document.querySelector('.modal').remove();
+            
+            // Mostrar confirmación
+            showNotification(`¡Gracias! Tu calificación de la tienda física ha sido registrada.`);
+        }
+
+        // Función para inicializar estrellas de calificación
+        function initializeRatingStars(starsContainerId, hiddenInputId) {
+            const starsContainer = document.getElementById(starsContainerId);
+            const hiddenInput = document.getElementById(hiddenInputId);
+            
+            if (!starsContainer || !hiddenInput) return;
+            
+            starsContainer.querySelectorAll('.star').forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    
+                    // Actualizar estrellas visualmente
+                    starsContainer.querySelectorAll('.star').forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                            s.textContent = '★';
+                        } else {
+                            s.classList.remove('active');
+                            s.textContent = '☆';
+                        }
+                    });
+                    
+                    // Guardar la calificación en el campo oculto
+                    hiddenInput.value = rating;
+                });
+                
+                // Efecto hover
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    
+                    starsContainer.querySelectorAll('.star').forEach((s, index) => {
+                        if (index < rating) {
+                            s.style.color = '#ffc107';
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseleave', function() {
+                    const currentRating = parseInt(hiddenInput.value);
+                    
+                    starsContainer.querySelectorAll('.star').forEach((s, index) => {
+                        if (index >= currentRating) {
+                            s.style.color = '#ddd';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Función para obtener nombre de tienda por código
+        function getStoreName(storeCode) {
+            const stores = {
+                'ST001': 'MundoPhone Centro',
+                'ST002': 'MundoPhone Norte',
+                'ST003': 'MundoPhone Sur',
+                'ST004': 'MundoPhone Este',
+                'ST005': 'MundoPhone Oeste'
+            };
+            
+            return stores[storeCode] || `Tienda ${storeCode}`;
+        }
+
+        // Función para obtener el promedio de calificaciones de servicio en línea
+        function getOnlineServiceAverageRating() {
+            const onlineServiceRatings = JSON.parse(localStorage.getItem('mundoPhoneOnlineServiceRatings')) || {};
+            let totalRating = 0;
+            let ratingCount = 0;
+            
+            Object.values(onlineServiceRatings).forEach(ratings => {
+                ratings.forEach(rating => {
+                    totalRating += rating.rating;
+                    ratingCount++;
+                });
+            });
+            
+            return ratingCount > 0 ? (totalRating / ratingCount).toFixed(1) : 0;
+        }
+
+        // Función para obtener el promedio de calificaciones de tienda física
+        function getInStoreServiceAverageRating() {
+            const inStoreServiceRatings = JSON.parse(localStorage.getItem('mundoPhoneInStoreServiceRatings')) || {};
+            let totalRating = 0;
+            let ratingCount = 0;
+            
+            Object.values(inStoreServiceRatings).forEach(ratings => {
+                ratings.forEach(rating => {
+                    totalRating += rating.rating;
+                    ratingCount++;
+                });
+            });
+            
+            return ratingCount > 0 ? (totalRating / ratingCount).toFixed(1) : 0;
+        }
+
+        // Función para actualizar estadísticas de calificaciones de servicio
+        function updateServiceRatingStats() {
+            // Esta función puede ser usada para actualizar gráficas o estadísticas
+            // en el panel de administración relacionadas con las calificaciones de servicio
+            console.log('Estadísticas de calificación de servicio actualizadas');
+        }
+
+        // Función para actualizar la visualización de calificaciones de servicio
+        function updateServiceRatingDisplay(orderCode) {
+            // Esta función puede ser usada para actualizar la visualización
+            // de calificaciones en la interfaz cuando sea necesario
+        }
+
+        // Función para mostrar las calificaciones de servicio en el panel de administración
+        function renderServiceRatingsAdmin() {
+            const onlineRatings = JSON.parse(localStorage.getItem('mundoPhoneOnlineServiceRatings')) || {};
+            const inStoreRatings = JSON.parse(localStorage.getItem('mundoPhoneInStoreServiceRatings')) || {};
+            
+            // Aquí puedes implementar la lógica para mostrar las calificaciones
+            // en el panel de administración
+            console.log('Calificaciones de servicio cargadas para el panel de administración');
+        }
+
+        // Modificar la función de procesamiento de pago para incluir opción de calificación
+        function addServiceRatingOptionToOrder(orderCode) {
+            // Después de procesar un pedido exitosamente, ofrecer calificar el servicio
+            setTimeout(() => {
+                if (confirm('¿Te gustaría calificar nuestro servicio de compra en línea?')) {
+                    showOnlineServiceRatingForm(orderCode);
+                }
+            }, 2000);
+        }
+
+        // Actualizar la función processPayment para incluir la opción de calificación
+        const originalProcessPayment = processPayment;
+        processPayment = function() {
+            // Llamar a la función original
+            const result = originalProcessPayment.apply(this, arguments);
+            
+            // Si el pago fue exitoso, ofrecer calificar el servicio
+            if (cart.length === 0) { // Esto indica que el carrito se vació, por lo que el pago fue exitoso
+                const orders = JSON.parse(localStorage.getItem('mundoPhoneOrders')) || [];
+                const latestOrder = orders[orders.length - 1];
+                
+                if (latestOrder) {
+                    addServiceRatingOptionToOrder(latestOrder.code);
+                }
+            }
+            
+            return result;
+        };
+
+        // Añadir botones de calificación de servicio en las secciones correspondientes
+        function addServiceRatingButtons() {
+            // Añadir botón en el footer para calificar tienda física
+            const footer = document.querySelector('footer');
+            if (footer) {
+                const ratingButton = document.createElement('button');
+                ratingButton.className = 'btn btn-secondary';
+                ratingButton.innerHTML = '<i class="fas fa-store"></i> Calificar Tienda Física';
+                ratingButton.style.margin = '10px';
+                ratingButton.onclick = () => showInStoreServiceRatingForm();
+                
+                footer.querySelector('.footer-content').appendChild(ratingButton);
+            }
+            
+            // Añadir opción en el historial de pedidos para calificar servicio en línea
+            const orderHistory = document.getElementById('order-history');
+            if (orderHistory) {
+                // Esta función se llamará cuando se renderice el historial de pedidos
+                const originalRenderOrderHistory = renderOrderHistory;
+                renderOrderHistory = function() {
+                    originalRenderOrderHistory();
+                    
+                    // Añadir botones de calificación a pedidos entregados
+                    document.querySelectorAll('.order-card').forEach(card => {
+                        const orderCode = card.querySelector('.order-code').textContent;
+                        const status = card.querySelector('.order-status').textContent;
+                        
+                        if (status === 'Entregado') {
+                            const actions = card.querySelector('.order-actions');
+                            const rateButton = document.createElement('button');
+                            rateButton.className = 'btn btn-secondary';
+                            rateButton.innerHTML = '<i class="fas fa-laptop"></i> Calificar Servicio';
+                            rateButton.onclick = () => showOnlineServiceRatingForm(orderCode);
+                            rateButton.style.marginLeft = '5px';
+                            
+                            actions.appendChild(rateButton);
+                        }
+                    });
+                };
+            }
+        }
+
+        // Función para inicializar datos de ejemplo de calificaciones de servicio
+        function initializeServiceRatingSampleData() {
+            // Solo crear datos de ejemplo si no existen calificaciones
+            const onlineRatings = JSON.parse(localStorage.getItem('mundoPhoneOnlineServiceRatings'));
+            const inStoreRatings = JSON.parse(localStorage.getItem('mundoPhoneInStoreServiceRatings'));
+            
+            if (!onlineRatings) {
+                const sampleOnlineRatings = {
+                    'MP100000001': [
+                        {
+                            id: 1,
+                            orderCode: 'MP100000001',
+                            rating: 5,
+                            comments: 'Excelente servicio, muy rápida la entrega',
+                            serviceType: 'online',
+                            date: '2023-11-12',
+                            timestamp: 1699826400000
+                        }
+                    ],
+                    'MP100000002': [
+                        {
+                            id: 2,
+                            orderCode: 'MP100000002',
+                            rating: 4,
+                            comments: 'Buen servicio, pero la comunicación podría mejorar',
+                            serviceType: 'online',
+                            date: '2023-11-18',
+                            timestamp: 1700344800000
+                        }
+                    ]
+                };
+                localStorage.setItem('mundoPhoneOnlineServiceRatings', JSON.stringify(sampleOnlineRatings));
+            }
+            
+            if (!inStoreRatings) {
+                const sampleInStoreRatings = {
+                    'ST001': [
+                        {
+                            id: 1,
+                            storeCode: 'ST001',
+                            rating: 5,
+                            staffName: 'María González',
+                            comments: 'Muy amable y conocedora del producto',
+                            serviceType: 'in_store',
+                            date: '2023-11-15',
+                            timestamp: 1700085600000
+                        }
+                    ],
+                    'ST002': [
+                        {
+                            id: 2,
+                            storeCode: 'ST002',
+                            rating: 3,
+                            staffName: 'Carlos Ruiz',
+                            comments: 'Servicio regular, algo lento',
+                            serviceType: 'in_store',
+                            date: '2023-11-20',
+                            timestamp: 1700527200000
+                        }
+                    ]
+                };
+                localStorage.setItem('mundoPhoneInStoreServiceRatings', JSON.stringify(sampleInStoreRatings));
+            }
+        }
+
+        // Optimización: Función debounce para limitar llamadas frecuentes
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Mejora: Sistema de reseñas más interactivo
+        function initializeInteractiveReviews() {
+            if (reviewFormsInitialized) return;
+            
+            // Configurar estrellas de calificación interactivas
+            document.querySelectorAll('.star-rating .star').forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    const container = this.closest('.star-rating');
+                    
+                    // Actualizar estrellas visualmente
+                    container.querySelectorAll('.star').forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                    
+                    // Guardar la calificación en un campo oculto
+                    const hiddenInput = container.parentElement.querySelector('input[type="hidden"]');
+                    if (hiddenInput) {
+                        hiddenInput.value = rating;
+                    }
+                    
+                    // Animación de confirmación
+                    this.style.transform = 'scale(1.4)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1.2)';
+                    }, 200);
+                });
+                
+                // Efecto hover mejorado
+                star.addEventListener('mouseenter', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    const container = this.closest('.star-rating');
+                    
+                    container.querySelectorAll('.star').forEach((s, index) => {
+                        if (index < rating) {
+                            s.style.color = '#ffc107';
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseleave', function() {
+                    const container = this.closest('.star-rating');
+                    const activeStars = container.querySelectorAll('.star.active');
+                    const currentRating = activeStars.length;
+                    
+                    container.querySelectorAll('.star').forEach((s, index) => {
+                        if (index >= currentRating) {
+                            s.style.color = '#ddd';
+                        }
+                    });
+                });
+            });
+            
+            // Mejorar formularios de reseñas
+            document.querySelectorAll('.review-form').forEach(form => {
+                const textarea = form.querySelector('textarea');
+                if (textarea) {
+                    textarea.addEventListener('focus', function() {
+                        form.classList.add('expanded');
+                    });
+                    
+                    textarea.addEventListener('blur', function() {
+                        if (!this.value) {
+                            form.classList.remove('expanded');
+                        }
+                    });
+                }
+            });
+            
+            reviewFormsInitialized = true;
+        }
+
+        // Mejora: Sistema de actualización de pedidos más eficiente
+        function initializeEfficientOrderUpdates() {
+            // Usar una estrategia de pooling más inteligente
+            if (orderUpdateInterval) {
+                clearInterval(orderUpdateInterval);
+            }
+            
+            orderUpdateInterval = setInterval(() => {
+                if (currentOrderTracking) {
+                    checkOrderUpdates(currentOrderTracking);
+                }
+            }, 3000); // Verificar cada 3 segundos (reducido de 5-10)
+        }
+
+        // Mejora: Verificación optimizada de actualizaciones de pedidos
+        function checkOrderUpdates(orderCode) {
+            const order = orders.find(o => o.code === orderCode);
+            if (!order) return;
+            
+            // Simular una verificación más rápida
+            const shouldUpdate = Math.random() < 0.3; // 30% de probabilidad de actualización
+            
+            if (shouldUpdate) {
+                // Mostrar indicador de carga
+                showLoadingIndicator();
+                
+                // Simular una llamada rápida al servidor
+                setTimeout(() => {
+                    // Avanzar estado si no está completado
+                    if (order.status !== "Entregado") {
+                        advanceOrderStatus(orderCode);
+                    }
+                    
+                    // Actualizar la vista
+                    updateOrderDisplay(orderCode);
+                    
+                    // Ocultar indicador de carga
+                    hideLoadingIndicator();
+                    
+                    // Mostrar notificación
+                    showUpdateNotification();
+                }, 500); // Simular respuesta en 0.5 segundos
+            }
+        }
+
+        // Mejora: Avance de estado más rápido
+        function advanceOrderStatus(orderCode) {
+            const order = orders.find(o => o.code === orderCode);
+            if (!order) return;
+            
+            const statuses = ["Pendiente", "Procesando", "Enviado", "En camino", "Entregado"];
+            const currentIndex = statuses.indexOf(order.status);
+            
+            if (currentIndex < statuses.length - 1) {
+                order.status = statuses[currentIndex + 1];
+                
+                // Actualizar timeline
+                if (order.timeline && order.timeline[currentIndex + 1]) {
+                    order.timeline[currentIndex + 1].completed = true;
+                    order.timeline[currentIndex + 1].active = true;
+                    order.timeline[currentIndex + 1].date = new Date().toLocaleDateString('es-MX');
+                    
+                    if (currentIndex >= 0) {
+                        order.timeline[currentIndex].active = false;
+                    }
+                }
+                
+                // Actualizar marca de tiempo
+                order.lastUpdate = new Date().toISOString();
+                
+                // Guardar cambios
+                localStorage.setItem('mundoPhoneOrders', JSON.stringify(orders));
+                
+                console.log(`Estado del pedido ${orderCode} actualizado a: ${order.status}`);
+                
+                // Si no es el estado final, programar próxima actualización más rápida
+                if (order.status !== "Entregado") {
+                    scheduleFastStatusUpdate(orderCode);
+                }
+            }
+        }
+
+        // Mejora: Programación de actualizaciones más rápida
+        function scheduleFastStatusUpdate(orderCode) {
+            const order = orders.find(o => o.code === orderCode);
+            if (!order) return;
+            
+            const statuses = ["Pendiente", "Procesando", "Enviado", "En camino", "Entregado"];
+            const currentIndex = statuses.indexOf(order.status);
+            
+            if (currentIndex < statuses.length - 1) {
+                // Tiempos más rápidos para actualizaciones automáticas
+                let nextStageMinutes = 0;
+                
+                if (currentIndex === 0) nextStageMinutes = 1; // 1 minuto
+                else if (currentIndex === 1) nextStageMinutes = 2; // 2 minutos
+                else if (currentIndex === 2) nextStageMinutes = 3; // 3 minutos
+                else if (currentIndex === 3) nextStageMinutes = 2; // 2 minutos
+                
+                // Programar la actualización (en milisegundos)
+                const updateDelay = nextStageMinutes * 60 * 1000;
+                
+                setTimeout(() => {
+                    advanceOrderStatus(orderCode);
+                }, updateDelay);
+                
+                console.log(`Próxima actualización para ${orderCode} en ${nextStageMinutes} minutos`);
+            }
+        }
+
+        // Mejora: Actualización optimizada de la visualización del pedido
+        function updateOrderDisplay(orderCode) {
+            const order = orders.find(o => o.code === orderCode);
+            if (!order) return;
+            
+            // Actualizar solo si este pedido está siendo visualizado
+            const currentTrackingCode = document.getElementById('tracking-code').value;
+            if (currentTrackingCode === orderCode) {
+                // Usar requestAnimationFrame para una actualización más suave
+                requestAnimationFrame(() => {
+                    updateTrackingDisplay(order);
+                });
+            }
+            
+            // Actualizar otras vistas de manera eficiente
+            debouncedUpdateViews();
+        }
+
+        // Función debounced para actualizar vistas
+        const debouncedUpdateViews = debounce(() => {
+            renderOrderHistory();
+            renderAdminOrdersTable();
+            updateAdminPanel();
+        }, 500);
+
+        // Mejora: Actualización optimizada de la vista de seguimiento
+        function updateTrackingDisplay(order) {
+            // Actualizar información básica
+            document.getElementById('order-code').textContent = order.code;
+            document.getElementById('order-date').textContent = order.date;
+            document.getElementById('order-customer').textContent = order.customer;
+            document.getElementById('order-total').textContent = order.total;
+            document.getElementById('order-estimated').textContent = formatHours(order.estimatedHours);
+            document.getElementById('order-progress').textContent = `${calculateOrderProgress(order)}%`;
+            
+            // Actualizar timeline de manera eficiente
+            updateTimelineDisplay(order.timeline);
+            
+            // Mostrar/ocultar sección de reseñas
+            const reviewSection = document.getElementById('order-review-section');
+            if (order.status === 'Entregado') {
+                reviewSection.style.display = 'block';
+                renderOrderReviews(order.code);
+            } else {
+                reviewSection.style.display = 'none';
+            }
+        }
+
+        // Mejora: Actualización eficiente del timeline
+        function updateTimelineDisplay(timeline) {
+            const timelineElement = document.getElementById('status-timeline');
+            
+            // Usar DocumentFragment para actualización en lote
+            const fragment = document.createDocumentFragment();
+            
+            timeline.forEach(step => {
+                const stepElement = document.createElement('div');
+                stepElement.className = `status-step ${step.completed ? 'completed' : ''} ${step.active ? 'active' : ''}`;
+                
+                stepElement.innerHTML = `
+                    <div class="status-icon">${step.step}</div>
+                    <div class="status-details">
+                        <h4>${step.title}</h4>
+                        <p>${step.description}</p>
+                        ${step.date ? `<div class="status-time">
+                            <div class="time-estimated">
+                                <span class="time-label">Fecha:</span>
+                                <span>${step.date}</span>
+                            </div>
+                            ${step.estimatedHours > 0 ? `
+                            <div class="time-actual">
+                                <span class="time-label">Tiempo estimado:</span>
+                                <span>${formatHours(step.estimatedHours)}</span>
+                            </div>
+                            ` : ''}
+                        </div>` : ''}
+                    </div>
+                `;
+                
+                fragment.appendChild(stepElement);
+            });
+            
+            // Reemplazar contenido de una sola vez
+            timelineElement.innerHTML = '';
+            timelineElement.appendChild(fragment);
+        }
+
+        // Mejora: Función de rastreo de pedidos optimizada
+        function trackOrder() {
+            const trackingCode = document.getElementById('tracking-code').value.trim();
+            const result = document.getElementById('tracking-result');
+            
+            if (!trackingCode) {
+                alert('Por favor, ingresa un código de seguimiento.');
+                return;
+            }
+            
+            const order = orders.find(o => o.code === trackingCode);
+            
+            if (!order) {
+                alert('No se encontró ningún pedido con ese código.');
+                return;
+            }
+            
+            // Establecer pedido actualmente rastreado
+            currentOrderTracking = trackingCode;
+            
+            // Mostrar información del pedido
+            updateTrackingDisplay(order);
+            
+            // Mostrar resultado
+            result.style.display = 'block';
+            
+            // Iniciar seguimiento de actualizaciones para este pedido
+            initializeEfficientOrderUpdates();
+        }
+
+        // Mejora: Indicadores visuales de carga
+        function showLoadingIndicator() {
+            document.getElementById('loading-indicator').classList.add('active');
+        }
+
+        function hideLoadingIndicator() {
+            document.getElementById('loading-indicator').classList.remove('active');
+        }
+
+        // Mejora: Notificación de actualización más visible
+        function showUpdateNotification() {
+            const notification = document.getElementById('update-notification');
+            notification.classList.add('show');
+            
+            // Agregar animación de entrada
+            notification.style.animation = 'slideInRight 0.5s ease';
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                notification.style.animation = '';
+            }, 3000);
+        }
+
+        // Función para mostrar notificación de actualización
+        function showUpdateNotification() {
+            updateNotification.classList.add('show');
+            setTimeout(() => {
+                updateNotification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Función para verificar actualizaciones de pedidos
+        function checkForOrderUpdates() {
+            if (currentlyTrackedOrder) {
+                const order = orders.find(o => o.code === currentlyTrackedOrder);
+                if (order && order.lastUpdate !== lastUpdateTime) {
+                    // Se ha actualizado el pedido
+                    lastUpdateTime = order.lastUpdate;
+                    
+                    // Actualizar la vista de rastreo
+                    trackOrder();
+                    
+                    // Mostrar notificación
+                    showUpdateNotification();
+                }
+            }
+        }
+
+        // Función para generar un tiempo de entrega estimado (en HORAS)
+        function generateDeliveryEstimate(region) {
+            const estimate = deliveryEstimates[region] || deliveryEstimates["Centro"];
+            const hours = Math.floor(Math.random() * (estimate.max - estimate.min + 1)) + estimate.min;
+            return hours;
+        }
+
+        // Función para generar tiempos por etapa (en HORAS)
+        function generateStageEstimates(totalHours) {
+            // Distribuir el tiempo total entre las etapas
+            const processingHours = Math.min(stageEstimates.processing.max, 
+                Math.max(stageEstimates.processing.min, Math.floor(totalHours * 0.1)));
+            
+            const shippingHours = Math.min(stageEstimates.shipping.max, 
+                Math.max(stageEstimates.shipping.min, Math.floor(totalHours * 0.2)));
+            
+            const transitHours = Math.min(stageEstimates.transit.max, 
+                Math.max(stageEstimates.transit.min, Math.floor(totalHours * 0.6)));
+            
+            const deliveryHours = Math.min(stageEstimates.delivery.max, 
+                Math.max(stageEstimates.delivery.min, Math.floor(totalHours * 0.1)));
+            
+            // Ajustar para que la suma sea igual al total
+            const sum = processingHours + shippingHours + transitHours + deliveryHours;
+            const adjustment = totalHours - sum;
+            
+            // Ajustar la etapa de tránsito (la más larga) para compensar
+            return {
+                processing: processingHours,
+                shipping: shippingHours,
+                transit: transitHours + adjustment,
+                delivery: deliveryHours
+            };
+        }
+
+        // Función para calcular el progreso del pedido
+        function calculateOrderProgress(order) {
+            if (!order.timeline) return 0;
+            
+            const completedSteps = order.timeline.filter(step => step.completed).length;
+            const totalSteps = order.timeline.length;
+            
+            return Math.round((completedSteps / totalSteps) * 100);
+        }
+
+        // Función para calcular el tiempo transcurrido (en HORAS)
+        function calculateElapsedTime(order) {
+            if (!order.createdAt) return 0;
+            
+            const created = new Date(order.createdAt);
+            const now = new Date();
+            const diffTime = Math.abs(now - created);
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            
+            return diffHours;
+        }
+
+        // Función para calcular el tiempo real por etapa (en HORAS)
+        function calculateActualStageTimes(order) {
+            if (!order.timeline || !order.stageTimes) return {};
+            
+            const actualTimes = {};
+            let currentDate = new Date(order.createdAt);
+            
+            order.timeline.forEach((step, index) => {
+                if (step.completed && step.date) {
+                    const stepDate = new Date(step.date);
+                    const prevStep = order.timeline.find(s => s.step === step.step - 1);
+                    let prevDate = order.createdAt;
+                    
+                    if (prevStep && prevStep.date) {
+                        prevDate = prevStep.date;
+                    }
+                    
+                    const prevStepDate = new Date(prevDate);
+                    const diffTime = Math.abs(stepDate - prevStepDate);
+                    const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+                    
+                    // Asignar el tiempo a la etapa correspondiente
+                    if (index === 1) actualTimes.processing = diffHours;
+                    else if (index === 2) actualTimes.shipping = diffHours;
+                    else if (index === 3) actualTimes.transit = diffHours;
+                    else if (index === 4) actualTimes.delivery = diffHours;
+                    
+                    currentDate = stepDate;
+                }
+            });
+            
+            return actualTimes;
+        }
+
+        // Función para formatear horas a un string legible
+        function formatHours(hours) {
+            if (isNaN(hours) || hours === 0) {
+                return "0 horas";
+            }
+            
+            if (hours < 24) {
+                return `${hours} horas`;
+            } else {
+                const days = Math.floor(hours / 24);
+                const remainingHours = hours % 24;
+                if (remainingHours === 0) {
+                    return `${days} día${days > 1 ? 's' : ''}`;
+                } else {
+                    return `${days} día${days > 1 ? 's' : ''} ${remainingHours} horas`;
+                }
+            }
+        }
+
+        // Inicializar con datos de ejemplo para devoluciones y pedidos
+        function initializeSampleData() {
+            // Si no hay devoluciones, crear algunas de ejemplo
+            if (returns.length === 0) {
+                const sampleReturns = [
+                    {
+                        code: "RET100000001",
+                        orderCode: "MP100000001",
+                        customer: "Ana García",
+                        date: "15/11/2023",
+                        reason: "producto_defectuoso",
+                        comments: "El teléfono no enciende",
+                        status: "Completada",
+                        createdAt: new Date('2023-11-15').toISOString(),
+                        items: [
+                            { id: 1, name: "Samsung Galaxy S24 Ultra", quantity: 1, price: 26999 }
+                        ],
+                        timeline: [
+                            { step: 1, title: "Solicitud Enviada", description: "Tu solicitud de devolución ha sido enviada", date: "15/11/2023", completed: true, active: false, estimatedSeconds: 0 },
+                            { step: 2, title: "En Revisión", description: "Tu solicitud está siendo revisada", date: "15/11/2023", completed: true, active: false, estimatedSeconds: 5 },
+                            { step: 3, title: "Aprobada", description: "Tu devolución ha sido aprobada", date: "15/11/2023", completed: true, active: false, estimatedSeconds: 0 },
+                            { step: 4, title: "Recogida Programada", description: "Se ha programado la recogida del paquete", date: "16/11/2023", completed: true, active: false, estimatedSeconds: 0 },
+                            { step: 5, title: "Producto Recibido", description: "Hemos recibido tu producto", date: "18/11/2023", completed: true, active: false, estimatedSeconds: 0 },
+                            { step: 6, title: "Reembolso Procesado", description: "Tu reembolso ha sido procesado", date: "20/11/2023", completed: true, active: false, estimatedSeconds: 0 }
+                        ]
+                    },
+                    {
+                        code: "RET100000002",
+                        orderCode: "MP100000002",
+                        customer: "Carlos López",
+                        date: "20/11/2023",
+                        reason: "arrepentimiento",
+                        comments: "Decidí cambiar de modelo",
+                        status: "Aprobada",
+                        createdAt: new Date('2023-11-20').toISOString(),
+                        items: [
+                            { id: 2, name: "iPhone 15 Pro", quantity: 1, price: 27499 }
+                        ],
+                        timeline: [
+                            { step: 1, title: "Solicitud Enviada", description: "Tu solicitud de devolución ha sido enviada", date: "20/11/2023", completed: true, active: false, estimatedSeconds: 0 },
+                            { step: 2, title: "En Revisión", description: "Tu solicitud está siendo revisada", date: "20/11/2023", completed: true, active: false, estimatedSeconds: 5 },
+                            { step: 3, title: "Aprobada", description: "Tu devolución ha sido aprobada", date: "20/11/2023", completed: true, active: true, estimatedSeconds: 0 },
+                            { step: 4, title: "Recogida Programada", description: "Se ha programado la recogida del paquete", date: "", completed: false, active: false, estimatedSeconds: 0 },
+                            { step: 5, title: "Producto Recibido", description: "Hemos recibido tu producto", date: "", completed: false, active: false, estimatedSeconds: 0 },
+                            { step: 6, title: "Reembolso Procesado", description: "Tu reembolso ha sido procesado", date: "", completed: false, active: false, estimatedSeconds: 0 }
+                        ]
+                    },
+                    {
+                        code: "RET100000003",
+                        orderCode: "MP100000003",
+                        customer: "María Rodríguez",
+                        date: "25/11/2023",
+                        reason: "producto_incorrecto",
+                        comments: "Recibí el modelo equivocado",
+                        status: "Solicitada",
+                        createdAt: new Date('2023-11-25').toISOString(),
+                        items: [
+                            { id: 3, name: "Xiaomi 14 Pro", quantity: 1, price: 19999 }
+                        ],
+                        timeline: [
+                            { step: 1, title: "Solicitud Enviada", description: "Tu solicitud de devolución ha sido enviada", date: "25/11/2023", completed: true, active: true, estimatedSeconds: 0 },
+                            { step: 2, title: "En Revisión", description: "Tu solicitud está siendo revisada", date: "", completed: false, active: false, estimatedSeconds: 5 },
+                            { step: 3, title: "Aprobada", description: "Tu devolución ha sido aprobada", date: "", completed: false, active: false, estimatedSeconds: 0 },
+                            { step: 4, title: "Recogida Programada", description: "Se ha programado la recogida del paquete", date: "", completed: false, active: false, estimatedSeconds: 0 },
+                            { step: 5, title: "Producto Recibido", description: "Hemos recibido tu producto", date: "", completed: false, active: false, estimatedSeconds: 0 },
+                            { step: 6, title: "Reembolso Procesado", description: "Tu reembolso ha sido procesado", date: "", completed: false, active: false, estimatedSeconds: 0 }
+                        ]
+                    }
+                ];
+                
+                returns.push(...sampleReturns);
+                localStorage.setItem('mundoPhoneReturns', JSON.stringify(returns));
+            }
+
+            // Si no hay pedidos, crear algunos de ejemplo
+            if (orders.length === 0) {
+                const sampleOrders = [
+                    {
+                        code: "MP100000001",
+                        date: "10/11/2023",
+                        customer: "Ana García",
+                        total: "$26,999 MXN",
+                        status: "Entregado",
+                        region: "Centro",
+                        estimatedHours: 36,
+                        stageTimes: { processing: 4, shipping: 6, transit: 22, delivery: 4 },
+                        createdAt: new Date('2023-11-10').toISOString(),
+                        lastUpdate: new Date('2023-11-12').toISOString(),
+                        items: [
+                            { id: 1, name: "Samsung Galaxy S24 Ultra", quantity: 1, price: 26999 }
+                        ],
+                        timeline: [
+                            { step: 1, title: "Pedido Confirmado", description: "Tu pedido ha sido confirmado", date: "10/11/2023", completed: true, active: false, estimatedHours: 0 },
+                            { step: 2, title: "Preparando Envío", description: "Tu pedido está siendo preparado", date: "10/11/2023", completed: true, active: false, estimatedHours: 4 },
+                            { step: 3, title: "Enviado", description: "Tu pedido ha sido enviado", date: "11/11/2023", completed: true, active: false, estimatedHours: 6 },
+                            { step: 4, title: "En camino", description: "Tu pedido está en camino a tu domicilio", date: "11/11/2023", completed: true, active: false, estimatedHours: 22 },
+                            { step: 5, title: "Entregado", description: "Tu pedido ha sido entregado", date: "12/11/2023", completed: true, active: true, estimatedHours: 4 }
+                        ]
+                    },
+                    {
+                        code: "MP100000002",
+                        date: "15/11/2023",
+                        customer: "Carlos López",
+                        total: "$27,499 MXN",
+                        status: "Entregado",
+                        region: "Norte",
+                        estimatedHours: 60,
+                        stageTimes: { processing: 5, shipping: 8, transit: 42, delivery: 5 },
+                        createdAt: new Date('2023-11-15').toISOString(),
+                        lastUpdate: new Date('2023-11-18').toISOString(),
+                        items: [
+                            { id: 2, name: "iPhone 15 Pro", quantity: 1, price: 27499 }
+                        ],
+                        timeline: [
+                            { step: 1, title: "Pedido Confirmado", description: "Tu pedido ha sido confirmado", date: "15/11/2023", completed: true, active: false, estimatedHours: 0 },
+                            { step: 2, title: "Preparando Envío", description: "Tu pedido está siendo preparado", date: "15/11/2023", completed: true, active: false, estimatedHours: 5 },
+                            { step: 3, title: "Enviado", description: "Tu pedido ha sido enviado", date: "16/11/2023", completed: true, active: false, estimatedHours: 8 },
+                            { step: 4, title: "En camino", description: "Tu pedido está en camino a tu domicilio", date: "17/11/2023", completed: true, active: false, estimatedHours: 42 },
+                            { step: 5, title: "Entregado", description: "Tu pedido ha sido entregado", date: "18/11/2023", completed: true, active: true, estimatedHours: 5 }
+                        ]
+                    },
+                    {
+                        code: "MP100000003",
+                        date: "20/11/2023",
+                        customer: "María Rodríguez",
+                        total: "$19,999 MXN",
+                        status: "En camino",
+                        region: "Sur",
+                        estimatedHours: 84,
+                        stageTimes: { processing: 6, shipping: 10, transit: 62, delivery: 6 },
+                        createdAt: new Date('2023-11-20').toISOString(),
+                        lastUpdate: new Date('2023-11-22').toISOString(),
+                        items: [
+                            { id: 3, name: "Xiaomi 14 Pro", quantity: 1, price: 19999 }
+                        ],
+                        timeline: [
+                            { step: 1, title: "Pedido Confirmado", description: "Tu pedido ha sido confirmado", date: "20/11/2023", completed: true, active: false, estimatedHours: 0 },
+                            { step: 2, title: "Preparando Envío", description: "Tu pedido está siendo preparado", date: "21/11/2023", completed: true, active: false, estimatedHours: 6 },
+                            { step: 3, title: "Enviado", description: "Tu pedido ha sido enviado", date: "21/11/2023", completed: true, active: false, estimatedHours: 10 },
+                            { step: 4, title: "En camino", description: "Tu pedido está en camino a tu domicilio", date: "22/11/2023", completed: true, active: true, estimatedHours: 62 },
+                            { step: 5, title: "Entregado", description: "Tu pedido ha sido entregado", date: "", completed: false, active: false, estimatedHours: 6 }
+                        ]
+                    }
+                ];
+                
+                orders.push(...sampleOrders);
+                localStorage.setItem('mundoPhoneOrders', JSON.stringify(orders));
+            }
+        }
+
+        // Función para calcular tiempos reales por etapa con datos de ejemplo
+        function calculateStageTimesWithSampleData() {
+            const stageData = {
+                processing: { estimated: 0, actual: 0, count: 0 },
+                shipping: { estimated: 0, actual: 0, count: 0 },
+                transit: { estimated: 0, actual: 0, count: 0 },
+                delivery: { estimated: 0, actual: 0, count: 0 }
+            };
+            
+            // Usar datos de ejemplo para pedidos entregados
+            const deliveredOrders = orders.filter(order => order.status === "Entregado");
+            
+            deliveredOrders.forEach(order => {
+                if (order.stageTimes) {
+                    // Para datos de ejemplo, usar tiempos reales muy similares a los estimados con pequeñas variaciones
+                    const actualTimes = {
+                        processing: Math.floor(order.stageTimes.processing * (0.95 + Math.random() * 0.1)), // 95-105% del tiempo estimado
+                        shipping: Math.floor(order.stageTimes.shipping * (0.95 + Math.random() * 0.1)),
+                        transit: Math.floor(order.stageTimes.transit * (0.95 + Math.random() * 0.1)),
+                        delivery: Math.floor(order.stageTimes.delivery * (0.95 + Math.random() * 0.1))
+                    };
+                    
+                    Object.keys(order.stageTimes).forEach(stage => {
+                        if (order.stageTimes[stage]) {
+                            stageData[stage].estimated += order.stageTimes[stage];
+                            stageData[stage].actual += actualTimes[stage];
+                            stageData[stage].count += 1;
+                        }
+                    });
+                }
+            });
+            
+            return stageData;
+        }
+
+        // Función mejorada para renderizar gráficas de tiempos por etapa
+        function renderStageTimesCharts() {
+            // Gráfica de tiempos por etapa
+            const stageTimesCtx = document.getElementById('stage-times-chart').getContext('2d');
+            
+            // Calcular tiempos promedio por etapa con datos de ejemplo
+            const stageData = calculateStageTimesWithSampleData();
+            
+            const stages = ["Procesamiento", "Envío", "Tránsito", "Entrega"];
+            const avgEstimated = stages.map((stage, index) => {
+                const stageKey = Object.keys(stageData)[index];
+                return stageData[stageKey].count > 0 ? 
+                    (stageData[stageKey].estimated / stageData[stageKey].count).toFixed(1) : 0;
+            });
+            
+            const avgActual = stages.map((stage, index) => {
+                const stageKey = Object.keys(stageData)[index];
+                return stageData[stageKey].count > 0 ? 
+                    (stageData[stageKey].actual / stageData[stageKey].count).toFixed(1) : 0;
+            });
+            
+            // Destruir gráficas existentes si existen
+            if (window.stageTimesChart) {
+                window.stageTimesChart.destroy();
+            }
+            
+            window.stageTimesChart = new Chart(stageTimesCtx, {
+                type: 'bar',
+                data: {
+                    labels: stages,
+                    datasets: [
+                        {
+                            label: 'Tiempo Estimado (horas)',
+                            data: avgEstimated,
+                            backgroundColor: 'rgba(37, 99, 235, 0.7)',
+                            borderColor: 'rgb(37, 99, 235)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Tiempo Real (horas)',
+                            data: avgActual,
+                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                            borderColor: 'rgb(16, 185, 129)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Tiempos Promedio por Etapa de Envío'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw} horas`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Horas'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Gráfica de comparación de tiempos por etapa
+            const stageComparisonCtx = document.getElementById('stage-comparison-chart').getContext('2d');
+            
+            // Calcular eficiencia por etapa (real vs estimado)
+            const efficiencyData = stages.map((stage, index) => {
+                const stageKey = Object.keys(stageData)[index];
+                if (stageData[stageKey].count === 0) return 100;
+                
+                const estimated = stageData[stageKey].estimated / stageData[stageKey].count;
+                const actual = stageData[stageKey].actual / stageData[stageKey].count;
+                
+                // Eficiencia como porcentaje (100% = tiempo real igual al estimado)
+                // Menos del 100% = más rápido que lo estimado
+                // Más del 100% = más lento que lo estimado
+                const efficiency = (actual / estimated) * 100;
+                return Math.min(Math.max(efficiency, 95), 105); // Limitar entre 95% y 105% para mostrar pequeñas diferencias
+            });
+            
+            // Destruir gráfica existente si existe
+            if (window.stageComparisonChart) {
+                window.stageComparisonChart.destroy();
+            }
+            
+            window.stageComparisonChart = new Chart(stageComparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: stages,
+                    datasets: [{
+                        label: 'Eficiencia (%)',
+                        data: efficiencyData,
+                        backgroundColor: efficiencyData.map(value => 
+                            value <= 100 ? 'rgba(16, 185, 129, 0.7)' : 'rgba(245, 158, 11, 0.7)'
+                        ),
+                        borderColor: efficiencyData.map(value => 
+                            value <= 100 ? 'rgb(16, 185, 129)' : 'rgb(245, 158, 11)'
+                        ),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Eficiencia por Etapa (100% = Tiempo Estimado)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    let status = value <= 100 ? "Mejor de lo esperado" : "Ligeramente superior";
+                                    return `Eficiencia: ${value.toFixed(1)}% - ${status}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 90,
+                            max: 110,
+                            title: {
+                                display: true,
+                                text: 'Porcentaje de Eficiencia'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Función para renderizar el historial de devoluciones
+        function renderReturnsList() {
+            const returnsList = document.getElementById('returns-list');
+            returnsList.innerHTML = '';
+            
+            if (returns.length === 0) {
+                returnsList.innerHTML = '<p>No hay devoluciones registradas.</p>';
+                return;
+            }
+            
+            // Ordenar devoluciones por fecha (más recientes primero)
+            const sortedReturns = [...returns].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            sortedReturns.forEach(returnItem => {
+                const returnCard = document.createElement('div');
+                returnCard.className = 'return-card';
+                
+                // Determinar clase de estado
+                let statusClass = '';
+                if (returnItem.status === 'Solicitada') statusClass = 'status-requested';
+                else if (returnItem.status === 'Aprobada') statusClass = 'status-approved';
+                else if (returnItem.status === 'Completada') statusClass = 'status-completed';
+                else if (returnItem.status === 'Rechazada') statusClass = 'status-rejected';
+                
+                returnCard.innerHTML = `
+                    <div class="return-header">
+                        <div class="return-code">${returnItem.code}</div>
+                        <div class="return-status ${statusClass}">${returnItem.status}</div>
+                    </div>
+                    <div class="return-details">
+                        <div><strong>Pedido:</strong> ${returnItem.orderCode}</div>
+                        <div><strong>Fecha:</strong> ${returnItem.date}</div>
+                        <div><strong>Motivo:</strong> ${getReturnReasonText(returnItem.reason)}</div>
+                        ${returnItem.comments ? `<div><strong>Comentarios:</strong> ${returnItem.comments}</div>` : ''}
+                    </div>
+                    <div class="return-items">
+                        ${returnItem.items.map(item => `
+                            <div class="return-item">
+                                <span>${item.name}</span>
+                                <span>${item.quantity} x $${item.price.toLocaleString()} MXN</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="return-actions">
+                        <button class="btn btn-primary" onclick="viewReturnDetails('${returnItem.code}')">
+                            <i class="fas fa-eye"></i> Ver Detalles
+                        </button>
+                        ${returnItem.status === 'Solicitada' ? `
+                            <button class="btn btn-danger" onclick="cancelReturn('${returnItem.code}')">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+                
+                returnsList.appendChild(returnCard);
+            });
+        }
+
+        // Función para obtener el texto del motivo de devolución
+        function getReturnReasonText(reason) {
+            const reasons = {
+                'producto_defectuoso': 'Producto defectuoso',
+                'producto_incorrecto': 'Producto incorrecto',
+                'no_cumple_esperanzas': 'No cumple con las expectativas',
+                'cambio_modelo': 'Cambio de modelo',
+                'arrepentimiento': 'Arrepentimiento de compra',
+                'daño_transporte': 'Daño durante el transporte',
+                'falta_accesorio': 'Falta accesorio'
+            };
+            
+            return reasons[reason] || reason;
+        }
+
+        // Función para ver detalles de una devolución
+        function viewReturnDetails(returnCode) {
+            const returnItem = returns.find(r => r.code === returnCode);
+            if (!returnItem) return;
+            
+            // Mostrar modal con detalles de la devolución
+            alert(`Detalles de la devolución:\n\nCódigo: ${returnItem.code}\nPedido: ${returnItem.orderCode}\nEstado: ${returnItem.status}\nMotivo: ${getReturnReasonText(returnItem.reason)}\nComentarios: ${returnItem.comments || 'Ninguno'}`);
+        }
+
+        // Función para cancelar una devolución
+        function cancelReturn(returnCode) {
+            if (confirm('¿Estás seguro de que deseas cancelar esta solicitud de devolución?')) {
+                const returnIndex = returns.findIndex(r => r.code === returnCode);
+                if (returnIndex !== -1) {
+                    returns.splice(returnIndex, 1);
+                    localStorage.setItem('mundoPhoneReturns', JSON.stringify(returns));
+                    renderReturnsList();
+                    alert('Devolución cancelada exitosamente.');
+                }
+            }
+        }
+
+        // Función para llenar el selector de pedidos para devolución
+        function populateReturnOrderSelector() {
+            const returnOrderSelect = document.getElementById('return-order');
+            returnOrderSelect.innerHTML = '<option value="">-- Selecciona un pedido --</option>';
+            
+            // Solo mostrar pedidos entregados que no tengan devolución activa
+            const deliveredOrders = orders.filter(order => 
+                order.status === 'Entregado' && 
+                !returns.some(returnItem => returnItem.orderCode === order.code && 
+                    ['Solicitada', 'Aprobada'].includes(returnItem.status))
+            );
+            
+            deliveredOrders.forEach(order => {
+                const option = document.createElement('option');
+                option.value = order.code;
+                option.textContent = `${order.code} - ${order.date} - ${order.total}`;
+                returnOrderSelect.appendChild(option);
+            });
+        }
+
+        // Función para enviar solicitud de devolución
+        function submitReturnRequest() {
+            const orderCode = document.getElementById('return-order').value;
+            const reason = document.getElementById('return-reason').value;
+            const comments = document.getElementById('return-comments').value;
+            
+            if (!orderCode || !reason) {
+                alert('Por favor, selecciona un pedido y un motivo para la devolución.');
+                return;
+            }
+            
+            const order = orders.find(o => o.code === orderCode);
+            if (!order) {
+                alert('Pedido no encontrado.');
+                return;
+            }
+            
+            // Generar código de devolución
+            const returnCode = 'RET' + (100000000 + returns.length + 1).toString().substring(1);
+            
+            // Crear objeto de devolución
+            const newReturn = {
+                code: returnCode,
+                orderCode: orderCode,
+                customer: order.customer,
+                date: new Date().toLocaleDateString('es-MX'),
+                reason: reason,
+                comments: comments,
+                status: 'Solicitada',
+                createdAt: new Date().toISOString(),
+                items: order.items,
+                timeline: [
+                    { step: 1, title: "Solicitud Enviada", description: "Tu solicitud de devolución ha sido enviada", date: new Date().toLocaleDateString('es-MX'), completed: true, active: true, estimatedSeconds: 0 },
+                    { step: 2, title: "En Revisión", description: "Tu solicitud está siendo revisada", date: "", completed: false, active: false, estimatedSeconds: 5 },
+                    { step: 3, title: "Aprobada", description: "Tu devolución ha sido aprobada", date: "", completed: false, active: false, estimatedSeconds: 0 },
+                    { step: 4, title: "Recogida Programada", description: "Se ha programado la recogida del paquete", date: "", completed: false, active: false, estimatedSeconds: 0 },
+                    { step: 5, title: "Producto Recibido", description: "Hemos recibido tu producto", date: "", completed: false, active: false, estimatedSeconds: 0 },
+                    { step: 6, title: "Reembolso Procesado", description: "Tu reembolso ha sido procesado", date: "", completed: false, active: false, estimatedSeconds: 0 }
+                ]
+            };
+            
+            // Añadir devolución
+            returns.push(newReturn);
+            localStorage.setItem('mundoPhoneReturns', JSON.stringify(returns));
+            
+            // Limpiar formulario
+            document.getElementById('return-order').value = '';
+            document.getElementById('return-reason').value = '';
+            document.getElementById('return-comments').value = '';
+            
+            // Actualizar lista de devoluciones
+            renderReturnsList();
+            populateReturnOrderSelector();
+            
+            // Iniciar proceso de aprobación automática
+            setTimeout(() => {
+                approveReturn(returnCode);
+            }, 5000); // 5 segundos
+            
+            alert(`Solicitud de devolución enviada. Código: ${returnCode}. Será aprobada automáticamente en 5 segundos.`);
+        }
+
+        // Función para aprobar devolución automáticamente
+        function approveReturn(returnCode) {
+            const returnItem = returns.find(r => r.code === returnCode);
+            if (!returnItem || returnItem.status !== 'Solicitada') return;
+            
+            // Actualizar estado
+            returnItem.status = 'Aprobada';
+            returnItem.timeline[1].completed = true;
+            returnItem.timeline[1].active = false;
+            returnItem.timeline[2].completed = true;
+            returnItem.timeline[2].active = true;
+            returnItem.timeline[2].date = new Date().toLocaleDateString('es-MX');
+            
+            // Guardar cambios
+            localStorage.setItem('mundoPhoneReturns', JSON.stringify(returns));
+            
+            // Actualizar vista
+            renderReturnsList();
+            
+            alert(`Devolución ${returnCode} ha sido aprobada automáticamente.`);
+        }
+
+        // Función para renderizar la tabla de comparación de tiempos por etapa
+        function renderStageComparisonTable() {
+            const tableBody = document.getElementById('stage-comparison-table-body');
+            tableBody.innerHTML = '';
+            
+            // Calcular tiempos promedio por etapa
+            const stageData = calculateStageTimesWithSampleData();
+            const stages = ["Procesamiento", "Envío", "Tránsito", "Entrega"];
+            const stageKeys = ["processing", "shipping", "transit", "delivery"];
+            
+            stages.forEach((stage, index) => {
+                const stageKey = stageKeys[index];
+                const estimated = stageData[stageKey].count > 0 ? 
+                    (stageData[stageKey].estimated / stageData[stageKey].count).toFixed(1) : 0;
+                const actual = stageData[stageKey].count > 0 ? 
+                    (stageData[stageKey].actual / stageData[stageKey].count).toFixed(1) : 0;
+                
+                const difference = (actual - estimated).toFixed(1);
+                const efficiency = stageData[stageKey].count > 0 ? 
+                    ((actual / estimated) * 100).toFixed(1) : 100;
+                
+                // Determinar clase para la diferencia
+                let diffClass = 'time-neutral';
+                if (difference > 0) diffClass = 'time-negative';
+                else if (difference < 0) diffClass = 'time-positive';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${stage}</td>
+                    <td>${estimated} horas</td>
+                    <td>${actual} horas</td>
+                    <td class="time-difference ${diffClass}">${difference > 0 ? '+' : ''}${difference} horas</td>
+                    <td>${efficiency}%</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Función para renderizar productos con calificaciones
+        function renderProducts() {
+            productsContainer.innerHTML = '';
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                const stockStatus = product.stock > 5 ? 'in-stock' : 
+                                  product.stock > 0 ? 'low-stock' : 'out-of-stock';
+                const stockText = product.stock > 5 ? 'En stock' : 
+                                product.stock > 0 ? 'Stock bajo' : 'Agotado';
+                
+                // Generar estrellas de calificación
+                const ratingStars = generateRatingStars(product.rating);
+                
+                productCard.innerHTML = `
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image-container">
+                        <img src="${product.image}" alt="${product.model}" class="product-image" onerror="this.src='${product.backupImage}'">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">${product.model}</h3>
+                        <p class="product-description">${product.desc}</p>
+                        
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ${ratingStars}
+                            </div>
+                            <div class="average-rating">${product.rating}</div>
+                            <div class="review-count">(${product.reviews})</div>
+                        </div>
+                        
+                        <div class="product-meta">
+                            <div class="product-price">$${product.price.toLocaleString()} MXN</div>
+                            <div class="product-stock ${stockStatus}">${stockText} (${product.stock} disponibles)</div>
+                        </div>
+                        <div class="quantity-selector">
+                            <button onclick="decreaseQuantity(${product.id})">-</button>
+                            <input type="number" id="quantity-${product.id}" value="1" min="1" max="${product.stock}">
+                            <button onclick="increaseQuantity(${product.id})">+</button>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="addToCart(${product.id})" ${product.stock === 0 ? 'disabled' : ''}>
+                                <i class="fas fa-cart-plus"></i> Agregar
+                            </button>
+                            <button class="btn btn-secondary" onclick="viewProductReviews(${product.id})">
+                                <i class="fas fa-star"></i> Reseñas
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                productsContainer.appendChild(productCard);
+            });
+        }
+
+        // Función para generar estrellas de calificación
+        function generateRatingStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            for (let i = 1; i <= 5; i++) {
+                if (i <= fullStars) {
+                    stars += '<span class="star active">★</span>';
+                } else if (i === fullStars + 1 && hasHalfStar) {
+                    stars += '<span class="star active">★</span>';
+                } else {
+                    stars += '<span class="star">☆</span>';
+                }
+            }
+            
+            return stars;
+        }
+
+        // Resto de funciones del sistema
+        function decreaseQuantity(productId) {
+            const input = document.getElementById(`quantity-${productId}`);
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+
+        function increaseQuantity(productId) {
+            const input = document.getElementById(`quantity-${productId}`);
+            const product = products.find(p => p.id === productId);
+            if (parseInt(input.value) < product.stock) {
+                input.value = parseInt(input.value) + 1;
+            }
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const quantity = parseInt(document.getElementById(`quantity-${productId}`).value);
+            
+            if (quantity > product.stock) {
+                alert('No hay suficiente stock disponible.');
+                return;
+            }
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.model,
+                    price: product.price,
+                    quantity: quantity,
+                    image: product.image
+                });
+            }
+            
+            updateCart();
+            showNotification(`${product.model} agregado al carrito`);
+        }
+
+        function updateCart() {
+            cartItems.innerHTML = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">$${item.price.toLocaleString()} MXN</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button onclick="decreaseCartQuantity(${item.id})">-</button>
+                        <span class="cart-item-quantity">${item.quantity}</span>
+                        <button onclick="increaseCartQuantity(${item.id})">+</button>
+                        <button class="btn btn-danger" onclick="removeFromCart(${item.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            totalElement.textContent = total.toLocaleString();
+            cartBadge.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // Guardar carrito en localStorage
+            localStorage.setItem('mundoPhoneCart', JSON.stringify(cart));
+        }
+
+        function decreaseCartQuantity(productId) {
+            const item = cart.find(item => item.id === productId);
+            if (item.quantity > 1) {
+                item.quantity--;
+                updateCart();
+            }
+        }
+
+        function increaseCartQuantity(productId) {
+            const item = cart.find(item => item.id === productId);
+            const product = products.find(p => p.id === productId);
+            
+            if (item.quantity < product.stock) {
+                item.quantity++;
+                updateCart();
+            } else {
+                alert('No hay más stock disponible de este producto.');
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCart();
+        }
+
+        function toggleCart() {
+            const cartElement = document.getElementById('cart');
+            cartElement.classList.toggle('active');
+        }
+
+        function showPaymentForm() {
+            if (cart.length === 0) {
+                alert('El carrito está vacío.');
+                return;
+            }
+            paymentForm.classList.add('active');
+        }
+
+        function hidePaymentForm() {
+            paymentForm.classList.remove('active');
+        }
+
+        function processPayment() {
+            // Validar formulario
+            const cardNumber = document.getElementById('card-number').value;
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            const name = document.getElementById('name').value;
+            
+            if (!cardNumber || !expiry || !cvv || !name) {
+                alert('Por favor, completa todos los campos del formulario.');
+                return;
+            }
+            
+            // Simular procesamiento de pago
+            alert('Procesando pago...');
+            
+            // Generar código de pedido
+            const orderCode = 'MP' + (100000000 + orders.length + 1).toString().substring(1);
+            
+            // Crear pedido
+            const region = Object.keys(deliveryEstimates)[Math.floor(Math.random() * Object.keys(deliveryEstimates).length)];
+            const estimatedHours = generateDeliveryEstimate(region);
+            const stageTimes = generateStageEstimates(estimatedHours);
+            
+            const newOrder = {
+                code: orderCode,
+                date: new Date().toLocaleDateString('es-MX'),
+                customer: name,
+                total: `$${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toLocaleString()} MXN`,
+                status: "Pendiente",
+                region: region,
+                estimatedHours: estimatedHours,
+                stageTimes: stageTimes,
+                createdAt: new Date().toISOString(),
+                lastUpdate: new Date().toISOString(),
+                items: [...cart],
+                timeline: [
+                    { step: 1, title: "Pedido Confirmado", description: "Tu pedido ha sido confirmado", date: new Date().toLocaleDateString('es-MX'), completed: true, active: true, estimatedHours: 0 },
+                    { step: 2, title: "Preparando Envío", description: "Tu pedido está siendo preparado", date: "", completed: false, active: false, estimatedHours: stageTimes.processing },
+                    { step: 3, title: "Enviado", description: "Tu pedido ha sido enviado", date: "", completed: false, active: false, estimatedHours: stageTimes.shipping },
+                    { step: 4, title: "En camino", description: "Tu pedido está en camino a tu domicilio", date: "", completed: false, active: false, estimatedHours: stageTimes.transit },
+                    { step: 5, title: "Entregado", description: "Tu pedido ha sido entregado", date: "", completed: false, active: false, estimatedHours: stageTimes.delivery }
+                ]
+            };
+            
+            // Añadir pedido
+            orders.push(newOrder);
+            localStorage.setItem('mundoPhoneOrders', JSON.stringify(orders));
+            
+            // Actualizar stock
+            cart.forEach(cartItem => {
+                const product = products.find(p => p.id === cartItem.id);
+                if (product) {
+                    product.stock -= cartItem.quantity;
+                }
+            });
+            
+            // Limpiar carrito
+            cart = [];
+            updateCart();
+            hidePaymentForm();
+            toggleCart();
+            
+            // Iniciar simulación de envío
+            startOrderSimulation(orderCode);
+            
+            alert(`¡Pedido realizado con éxito! Tu código de seguimiento es: ${orderCode}`);
+            
+            // Actualizar productos y vistas
+            renderProducts();
+            renderOrderHistory();
+            updateAdminPanel();
+        }
+
+        function showNotification(message) {
+            // Crear notificación temporal
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--success);
+                color: white;
+                padding: 12px 18px;
+                border-radius: 10px;
+                box-shadow: var(--shadow-lg);
+                z-index: 1001;
+                transition: transform 0.3s ease;
+                font-weight: 600;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function switchTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tracking-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tracking-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar pestaña seleccionada
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            document.querySelector(`.tracking-tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            
+            // Cargar datos específicos de la pestaña
+            if (tabName === 'history') {
+                renderOrderHistory();
+            } else if (tabName === 'returns') {
+                renderReturnsList();
+                populateReturnOrderSelector();
+            }
+        }
+
+        // NUEVA: Función para cambiar pestañas de logística
+        function switchLogisticsTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.logistics-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.logistics-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar pestaña seleccionada
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            document.querySelector(`.logistics-tab[onclick="switchLogisticsTab('${tabName}')"]`).classList.add('active');
+            
+            // Inicializar elementos específicos de la pestaña
+            if (tabName === 'location') {
+                initializeWarehouseMap();
+            } else if (tabName === 'inventory') {
+                initializeInventoryChart();
+            }
+        }
+
+        function switchAdminTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.admin-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar pestaña seleccionada
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            document.querySelector(`.admin-tab[onclick="switchAdminTab('${tabName}')"]`).classList.add('active');
+            
+            // Cargar datos específicos de la pestaña
+            if (tabName === 'stats') {
+                updateAdminPanel();
+            } else if (tabName === 'orders') {
+                renderAdminOrdersTable();
+            } else if (tabName === 'returns') {
+                renderAdminReturnsTable();
+            } else if (tabName === 'stage-times') {
+                renderStageTimesCharts();
+                renderStageComparisonTable();
+            }
+        }
+
+        function renderOrderHistory() {
+            const orderHistory = document.getElementById('order-history');
+            orderHistory.innerHTML = '';
+            
+            if (orders.length === 0) {
+                orderHistory.innerHTML = '<p>No hay pedidos registrados.</p>';
+                return;
+            }
+            
+            // Ordenar pedidos por fecha (más recientes primero)
+            const sortedOrders = [...orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            sortedOrders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card';
+                
+                // Determinar clase de estado
+                let statusClass = '';
+                if (order.status === 'Pendiente') statusClass = 'status-pending';
+                else if (order.status === 'Procesando') statusClass = 'status-processing';
+                else if (order.status === 'Enviado') statusClass = 'status-shipped';
+                else if (order.status === 'En camino') statusClass = 'status-processing';
+                else if (order.status === 'Entregado') statusClass = 'status-delivered';
+                
+                orderCard.innerHTML = `
+                    <div class="order-header">
+                        <div class="order-code">${order.code}</div>
+                        <div class="order-status ${statusClass}">${order.status}</div>
+                    </div>
+                    <div class="order-details">
+                        <div><strong>Fecha:</strong> ${order.date}</div>
+                        <div><strong>Total:</strong> ${order.total}</div>
+                        <div><strong>Progreso:</strong> ${calculateOrderProgress(order)}%</div>
+                    </div>
+                    <div class="order-items">
+                        ${order.items.map(item => `
+                            <div class="order-item">
+                                <span>${item.name}</span>
+                                <span>${item.quantity} x $${item.price.toLocaleString()} MXN</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn btn-primary" onclick="trackSpecificOrder('${order.code}')">
+                            <i class="fas fa-search"></i> Rastrear
+                        </button>
+                        ${order.status === 'Entregado' ? `
+                            <button class="btn btn-secondary" onclick="requestReturn('${order.code}')">
+                                <i class="fas fa-undo"></i> Devolución
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+                
+                orderHistory.appendChild(orderCard);
+            });
+        }
+
+        function trackSpecificOrder(orderCode) {
+            document.getElementById('tracking-code').value = orderCode;
+            switchTab('track');
+            trackOrder();
+        }
+
+        function requestReturn(orderCode) {
+            switchTab('returns');
+            document.getElementById('return-order').value = orderCode;
+        }
+
+        function renderAdminOrdersTable() {
+            const tableBody = document.getElementById('admin-orders-table');
+            tableBody.innerHTML = '';
+            
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                
+                // Determinar clase de estado
+                let statusClass = '';
+                if (order.status === 'Pendiente') statusClass = 'status-pending';
+                else if (order.status === 'Procesando') statusClass = 'status-processing';
+                else if (order.status === 'Enviado') statusClass = 'status-shipped';
+                else if (order.status === 'En camino') statusClass = 'status-processing';
+                else if (order.status === 'Entregado') statusClass = 'status-delivered';
+                
+                row.innerHTML = `
+                    <td>${order.code}</td>
+                    <td>${order.customer}</td>
+                    <td>${order.date}</td>
+                    <td><span class="order-status ${statusClass}">${order.status}</span></td>
+                    <td>${formatHours(order.estimatedHours)}</td>
+                    <td>${calculateOrderProgress(order)}%</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="trackSpecificOrder('${order.code}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        ${order.status !== 'Entregado' ? `
+                        <button class="btn btn-secondary" onclick="updateOrderStatus('${order.code}')">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                        ` : ''}
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        function renderAdminReturnsTable() {
+            const tableBody = document.getElementById('admin-returns-table');
+            tableBody.innerHTML = '';
+            
+            returns.forEach(returnItem => {
+                const row = document.createElement('tr');
+                
+                // Determinar clase de estado
+                let statusClass = '';
+                if (returnItem.status === 'Solicitada') statusClass = 'status-requested';
+                else if (returnItem.status === 'Aprobada') statusClass = 'status-approved';
+                else if (returnItem.status === 'Completada') statusClass = 'status-completed';
+                else if (returnItem.status === 'Rechazada') statusClass = 'status-rejected';
+                
+                row.innerHTML = `
+                    <td>${returnItem.code}</td>
+                    <td>${returnItem.orderCode}</td>
+                    <td>${returnItem.customer}</td>
+                    <td>${returnItem.date}</td>
+                    <td>${getReturnReasonText(returnItem.reason)}</td>
+                    <td><span class="return-status ${statusClass}">${returnItem.status}</span></td>
+                    <td>
+                        <button class="btn btn-primary" onclick="viewReturnDetails('${returnItem.code}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        ${returnItem.status === 'Solicitada' ? `
+                        <button class="btn btn-success" onclick="approveReturn('${returnItem.code}')">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        ` : ''}
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updateAdminPanel() {
+            // Actualizar estadísticas
+            document.getElementById('total-orders').textContent = orders.length;
+            document.getElementById('delivered-orders').textContent = orders.filter(o => o.status === 'Entregado').length;
+            document.getElementById('pending-orders').textContent = orders.filter(o => o.status !== 'Entregado').length;
+            document.getElementById('return-requests').textContent = returns.length;
+            
+            // Calcular tiempo promedio de entrega
+            const deliveredOrders = orders.filter(o => o.status === 'Entregado');
+            const avgTime = deliveredOrders.length > 0 ? 
+                deliveredOrders.reduce((sum, order) => sum + order.estimatedHours, 0) / deliveredOrders.length : 0;
+            document.getElementById('avg-delivery-time').textContent = avgTime.toFixed(1);
+            
+            // Calcular porcentaje de entregas a tiempo
+            const onTimeOrders = deliveredOrders.filter(order => {
+                const elapsed = calculateElapsedTime(order);
+                return elapsed <= order.estimatedHours;
+            });
+            const onTimeRate = deliveredOrders.length > 0 ? 
+                (onTimeOrders.length / deliveredOrders.length * 100).toFixed(1) : 0;
+            document.getElementById('on-time-rate').textContent = `${onTimeRate}%`;
+            
+            // Actualizar gráficas
+            renderOrdersChart();
+            renderRegionChart();
+            renderEfficiencyChart();
+        }
+
+        function renderOrdersChart() {
+            const ctx = document.getElementById('orders-chart').getContext('2d');
+            
+            const statusCounts = {
+                'Pendiente': orders.filter(o => o.status === 'Pendiente').length,
+                'Procesando': orders.filter(o => o.status === 'Procesando').length,
+                'Enviado': orders.filter(o => o.status === 'Enviado').length,
+                'En camino': orders.filter(o => o.status === 'En camino').length,
+                'Entregado': orders.filter(o => o.status === 'Entregado').length
+            };
+            
+            // Destruir gráfica existente si existe
+            if (window.ordersChart) {
+                window.ordersChart.destroy();
+            }
+            
+            window.ordersChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(statusCounts),
+                    datasets: [{
+                        data: Object.values(statusCounts),
+                        backgroundColor: [
+                            'rgba(245, 158, 11, 0.7)',
+                            'rgba(37, 99, 235, 0.7)',
+                            'rgba(6, 182, 212, 0.7)',
+                            'rgba(139, 92, 246, 0.7)',
+                            'rgba(16, 185, 129, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(245, 158, 11)',
+                            'rgb(37, 99, 235)',
+                            'rgb(6, 182, 212)',
+                            'rgb(139, 92, 246)',
+                            'rgb(16, 185, 129)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Distribución de Estados de Pedidos'
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderRegionChart() {
+            const ctx = document.getElementById('region-chart').getContext('2d');
+            
+            const regionData = {};
+            orders.forEach(order => {
+                if (regionData[order.region]) {
+                    regionData[order.region]++;
+                } else {
+                    regionData[order.region] = 1;
+                }
+            });
+            
+            // Destruir gráfica existente si existe
+            if (window.regionChart) {
+                window.regionChart.destroy();
+            }
+            
+            window.regionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(regionData),
+                    datasets: [{
+                        label: 'Pedidos por Región',
+                        data: Object.values(regionData),
+                        backgroundColor: 'rgba(37, 99, 235, 0.7)',
+                        borderColor: 'rgb(37, 99, 235)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Pedidos por Región'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderEfficiencyChart() {
+            const ctx = document.getElementById('efficiency-chart').getContext('2d');
+            
+            const deliveredOrders = orders.filter(o => o.status === 'Entregado');
+            const estimatedTimes = deliveredOrders.map(o => o.estimatedHours);
+            const actualTimes = deliveredOrders.map(o => calculateElapsedTime(o));
+            
+            // Destruir gráfica existente si existe
+            if (window.efficiencyChart) {
+                window.efficiencyChart.destroy();
+            }
+            
+            window.efficiencyChart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Tiempo Estimado vs Real',
+                        data: deliveredOrders.map((order, index) => ({
+                            x: order.estimatedHours,
+                            y: actualTimes[index],
+                            orderCode: order.code
+                        })),
+                        backgroundColor: 'rgba(37, 99, 235, 0.7)',
+                        borderColor: 'rgb(37, 99, 235)',
+                        borderWidth: 1,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Tiempos de Entrega vs. Estimados'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const point = context.raw;
+                                    return `Pedido: ${point.orderCode}, Estimado: ${point.x}h, Real: ${point.y}h`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tiempo Estimado (horas)'
+                            },
+                            beginAtZero: true
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Tiempo Real (horas)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function viewProductReviews(productId) {
+            const product = products.find(p => p.id === productId);
+            document.getElementById('modal-product-name').textContent = `Reseñas - ${product.model}`;
+            document.getElementById('product-review-text').value = '';
+            
+            // Reset stars
+            document.querySelectorAll('#product-rating-stars .star').forEach(star => {
+                star.classList.remove('active');
+            });
+            
+            // Render reviews
+            renderProductReviews(productId);
+            
+            // Show modal
+            document.getElementById('product-review-modal').classList.add('active');
+        }
+
+        function closeProductReviewModal() {
+            document.getElementById('product-review-modal').classList.remove('active');
+        }
+
+        function submitProductReview() {
+            const productId = parseInt(document.getElementById('modal-product-name').textContent.split(' - ')[1].match(/\d+/)[0]);
+            const rating = parseInt(document.getElementById('product-rating-value').value);
+            const text = document.getElementById('product-review-text').value.trim();
+            
+            if (rating === 0) {
+                alert('Por favor, selecciona una calificación.');
+                return;
+            }
+            
+            if (!text) {
+                alert('Por favor, escribe un comentario.');
+                return;
+            }
+            
+            const review = {
+                id: Date.now(),
+                productId: productId,
+                rating: rating,
+                text: text,
+                author: 'Usuario Anónimo',
+                date: new Date().toLocaleDateString('es-MX')
+            };
+            
+            productReviews[productId].push(review);
+            localStorage.setItem('mundoPhoneProductReviews', JSON.stringify(productReviews));
+            
+            // Reset form
+            document.getElementById('product-review-text').value = '';
+            document.querySelectorAll('#product-rating-stars .star').forEach(star => {
+                star.classList.remove('active');
+            });
+            document.getElementById('product-rating-value').value = 0;
+            
+            // Update reviews list
+            renderProductReviews(productId);
+            
+            alert('¡Reseña enviada! Gracias por tu opinión.');
+        }
+
+        function renderProductReviews(productId) {
+            const reviewsList = document.getElementById('product-reviews-list');
+            reviewsList.innerHTML = '';
+            
+            const reviews = productReviews[productId] || [];
+            
+            if (reviews.length === 0) {
+                reviewsList.innerHTML = '<p>No hay reseñas para este producto aún.</p>';
+                return;
+            }
+            
+            reviews.forEach(review => {
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    stars += i <= review.rating ? '★' : '☆';
+                }
+                
+                reviewItem.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-author">${review.author}</div>
+                        <div class="review-rating">${stars}</div>
+                    </div>
+                    <div class="review-content">${review.text}</div>
+                    <div class="review-date">${review.date}</div>
+                `;
+                
+                reviewsList.appendChild(reviewItem);
+            });
+        }
+
+        function submitOrderReview() {
+            const rating = parseInt(document.getElementById('order-rating-value').value);
+            const text = document.getElementById('order-review-text').value.trim();
+            
+            if (rating === 0) {
+                alert('Por favor, selecciona una calificación.');
+                return;
+            }
+            
+            if (!text) {
+                alert('Por favor, escribe un comentario.');
+                return;
+            }
+            
+            const review = {
+                id: Date.now(),
+                orderCode: currentOrderTracking,
+                rating: rating,
+                text: text,
+                author: 'Usuario Anónimo',
+                date: new Date().toLocaleDateString('es-MX')
+            };
+            
+            if (!orderReviews[currentOrderTracking]) {
+                orderReviews[currentOrderTracking] = [];
+            }
+            
+            orderReviews[currentOrderTracking].push(review);
+            localStorage.setItem('mundoPhoneOrderReviews', JSON.stringify(orderReviews));
+            
+            // Reset form
+            document.getElementById('order-review-text').value = '';
+            document.querySelectorAll('#order-rating-stars .star').forEach(star => {
+                star.classList.remove('active');
+            });
+            document.getElementById('order-rating-value').value = 0;
+            
+            // Update reviews list
+            renderOrderReviews(currentOrderTracking);
+            
+            alert('¡Reseña enviada! Gracias por tu opinión.');
+        }
+
+        function renderOrderReviews(orderCode) {
+            const reviewsList = document.getElementById('order-reviews-list');
+            reviewsList.innerHTML = '';
+            
+            const reviews = orderReviews[orderCode] || [];
+            
+            if (reviews.length === 0) {
+                reviewsList.innerHTML = '<p>No hay reseñas para este pedido aún.</p>';
+                return;
+            }
+            
+            reviews.forEach(review => {
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item';
+                
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    stars += i <= review.rating ? '★' : '☆';
+                }
+                
+                reviewItem.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-author">${review.author}</div>
+                        <div class="review-rating">${stars}</div>
+                    </div>
+                    <div class="review-content">${review.text}</div>
+                    <div class="review-date">${review.date}</div>
+                `;
+                
+                reviewsList.appendChild(reviewItem);
+            });
+        }
+
+        // Función para iniciar la simulación de envío
+        function startOrderSimulation(orderCode) {
+            const order = orders.find(o => o.code === orderCode);
+            if (!order) return;
+            
+            // Programar la primera actualización (de Pendiente a Procesando)
+            const firstUpdateDelay = 0.1 * 60 * 60 * 1000; // 6 minutos
+            
+            setTimeout(() => {
+                advanceOrderStatus(orderCode);
+            }, firstUpdateDelay);
+            
+            console.log(`Simulación iniciada para pedido ${orderCode}. Primera actualización en 6 minutos`);
+        }
+
+        // NUEVAS FUNCIONES PARA LA SECCIÓN DE LOGÍSTICA
+
+        // Función para inicializar el mapa del almacén
+        function initializeWarehouseMap() {
+            // Actualizar visualización de uso de racks
+            document.querySelectorAll('.rack').forEach(rack => {
+                const usage = parseInt(rack.getAttribute('data-usage'));
+                const usageElement = rack.querySelector('.rack-usage');
+                
+                // Establecer altura basada en el porcentaje de uso
+                usageElement.style.height = `${usage}%`;
+                
+                // Establecer color basado en el nivel de uso
+                if (usage >= 70) {
+                    usageElement.style.background = 'var(--danger)';
+                } else if (usage >= 40) {
+                    usageElement.style.background = 'var(--warning)';
+                } else {
+                    usageElement.style.background = 'var(--success)';
+                }
+                
+                // Añadir tooltip con información del rack
+                rack.title = `Rack ${rack.getAttribute('data-rack')}: ${usage}% de uso`;
+            });
+        }
+
+        // Función para inicializar gráfica de rotación de inventario
+        function initializeInventoryChart() {
+            const ctx = document.getElementById('inventory-turnover-chart').getContext('2d');
+            
+            // Datos de ejemplo para la gráfica
+            const data = {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                datasets: [{
+                    label: 'Rotación de Inventario',
+                    data: [2.1, 2.3, 2.5, 2.8, 3.1, 3.4, 3.2, 3.5, 3.7, 3.9, 4.1, 4.3],
+                    borderColor: 'rgb(37, 99, 235)',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            };
+            
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Rotación Mensual de Inventario'
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Veces'
+                            }
+                        }
+                    }
+                }
+            };
+            
+            // Destruir gráfica existente si existe
+            if (window.inventoryTurnoverChart) {
+                window.inventoryTurnoverChart.destroy();
+            }
+            
+            window.inventoryTurnoverChart = new Chart(ctx, config);
+        }
+
+        // Inicialización mejorada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar datos iniciales
+            const savedCart = localStorage.getItem('mundoPhoneCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+            
+            // Inicializar datos de ejemplo
+            initializeSampleData();
+            initializeServiceRatingSampleData();
+            
+            // Renderizar componentes principales
+            renderProducts();
+            updateCart();
+            renderOrderHistory();
+            renderReturnsList();
+            populateReturnOrderSelector();
+            updateAdminPanel();
+            renderStageComparisonTable();
+            
+            // Inicializar reseñas interactivas
+            initializeInteractiveReviews();
+            
+            // Configurar menú móvil
+            mobileMenuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Cerrar menú móvil al hacer clic en un enlace
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                });
+            });
+            
+            // Cerrar menú móvil al hacer clic fuera de él
+            document.addEventListener('click', function(event) {
+                if (!navLinks.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+                    navLinks.classList.remove('active');
+                }
+            });
+            
+            // Inicializar sistema de actualización de pedidos
+            initializeEfficientOrderUpdates();
+            
+            // Inicializar el asistente de devolución
+            populateReturnOrderSelector();
+            
+            // Inicializar la sección de logística
+            initializeWarehouseMap();
+            initializeInventoryChart();
+            
+            // Añadir botones de calificación de servicio
+            addServiceRatingButtons();
+            
+            console.log('Aplicación MundoPhone con sección de tienda y logística cargada correctamente');
+        });
+    </script>
+</body>
+</html>
